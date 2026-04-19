@@ -33,13 +33,12 @@ const database = {
             `,
             gallery: [
                 { src: 'cnti_facade.jpg', caption: 'Главный фасад здания' },
-                { src: 'cnti_detail.jpg', caption: 'Детали мозаичной плитки' },
                 { src: 'cnti_entrance.jpg', caption: 'Входная группа' }
             ],
             infobox: {
                 'Статус': 'Действующее',
                 'Годы постройки': '1970-1980',
-                'Архитектурный стиль': 'Советский модернизм',
+                'Архитектура': 'Советский модернизм',
                 'Этажность': '5 этажей',
                 'Состояние': '80%'
             }
@@ -47,8 +46,8 @@ const database = {
         {
             id: 'orbita',
             title: 'Станция «Орбита»',
-            category: 'late',
-            image: 'orbita_main.jpg',
+            category: 'mid',
+            image: 'orbita_build.jpg',
             address: 'Центральный район, Притомская набережная, 15',
             state: '90%',
             stateClass: 'state-90',
@@ -68,7 +67,9 @@ const database = {
             `,
             gallery: [
                 { src: 'orbita_antenna.jpg', caption: 'Антенна станции' },
-                { src: 'orbita_building.jpg', caption: 'Здание станции' }
+                { src: 'orbita_antenna2.jpg', caption: 'Антенна станции' },
+                { src: 'orbita_build.jpg', caption: 'Здание станции' },
+                { src: 'orbita_building.jpg', caption: 'Проесс строительства' }
             ],
             infobox: {
                 'Статус': 'Работает',
@@ -102,8 +103,8 @@ const database = {
                 <p>Дом скрыт среди пятиэтажек и гаражей, выглядит необычно. Подъезды открыты, внутри — старые деревянные полы.</p>
             `,
             gallery: [
-                { src: 'khz_facade.jpg', caption: 'Фасад здания' },
-                { src: 'khz_balcony.jpg', caption: 'Балконы' },
+                { src: 'khz_main.jpg', caption: 'Фасад здания' },
+                { src: 'khz_entrance_1.jpg', caption: 'Подъезд' },
                 { src: 'khz_entrance.jpg', caption: 'Подъезд' }
             ],
             infobox: {
@@ -138,15 +139,54 @@ const database = {
                 <p>Внутри присутствуют следы пожара. Сохранилась часть плитки в туалетных комнатах, отдельные детали противогазов, обломки вентиляционных систем. Пол покрыт слоем мусора.</p>
             `,
             gallery: [
-                { src: 'shelter_entrance.jpg', caption: 'Вход в убежище' },
-                { src: 'shelter_inside.jpg', caption: 'Внутреннее помещение' },
-                { src: 'shelter_tiles.jpg', caption: 'Сохранившаяся плитка' }
+                { src: 'bomb_shelter_prom_main.jpg', caption: 'Вход в убежище' },
+                { src: 'shelter_inside.jpg', caption: 'Внутреннее помещение' }
             ],
             infobox: {
                 'Тип': 'Отдельно стоящее',
                 'Входов': '2',
                 'Помещений': '3-4',
                 'Состояние': '60%'
+            }
+        },
+        {
+            id: 'bomb_shelter_avtoz',
+            title: 'Бомбоубежище в за Спецавтохозяйством',
+            category: 'underground',
+            image: 'shelter_avtoz_main.jpg',
+            address: '[ДАННЫЕ УДАЛЕНЫ]',
+            state: '50%',
+            stateClass: 'state-60',
+            shortDesc: 'Крупное бомбоубежище возле железной дороги',
+            fullDesc: `
+                <h2>🏛️ Объект</h2>
+                <p>Большое отдельно стоящее бомбоубежище, расположенное между Ж/Д и гаражами. Имеет три входа и множество оголовков вентиляционных шахт.</p>
+                
+                <h2>📜 История</h2>
+                <p>Построено примерно в 1960-1970 гг.</p>
+                
+                <h2>🔍 Особенности</h2>
+                <p>Имеет больше помещение для укрываемых, несколько комнат с плиткой. В одной из комнат есть основание от дизельной электростанции.</p>
+                
+                <h2>🏚️ Современность</h2>
+                <p>Бомбоубежище разграблено. Внутри слои сажи, мусор, обломки кирпича. Часть насыпи раскопано.</p>
+            `,
+            gallery: [
+                { src: 'shelter_avtoz_main.jpg', caption: 'Вход в убежище' },
+                { src: 'shelter_avtoz_inside.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_inside2.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_inside3.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_inside4.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_inside5.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_inside6.jpg', caption: 'Внутреннее помещение' },
+                { src: 'shelter_avtoz_vent.jpg', caption: 'Вентиляция' },
+                { src: 'shelter_avtoz_vent2.jpg', caption: 'Вентиляция' }
+            ],
+            infobox: {
+                'Тип': 'Отдельно стоящее',
+                'Входов': '3',
+                'Помещений': '5-6',
+                'Состояние': '50%'
             }
         },
         // ПРЕДМЕТЫ
@@ -170,24 +210,177 @@ const database = {
                 <p>Регенеративный патрон содержит большое количество химически активного вещества (надпероксид калия).</p>
                 
                 <h2>📦 Модель в коллекции</h2>
-                <p>Комплектация: ИП-46 (имеется зажим и загубник). Дата изготовления: 1964 год (клеймо на корпусе). Состояние: Маска имеет повреждения на левой стороне. Регенеративный патрон был промыт водой для удаления активного вещества.</p>
+                <p>Комплектация: ИП-46 (имеется зажим и загубник). Дата изготовления: 1967 год (клеймо на корпусе). Состояние: Маска имеет повреждения на левой стороне. Регенеративный патрон был промыт водой для удаления активного вещества.</p>
             `,
             gallery: [
                 { src: 'ip46_full.jpg', caption: 'Общий вид' },
                 { src: 'ip46_mask.jpg', caption: 'Маска ШВСМ' },
                 { src: 'ip46_patron.jpg', caption: 'Регенеративный патрон' },
-                { src: 'ip46_bag.jpg', caption: 'Дыхательный мешок' }
+                { src: 'ip46_bag.jpg', caption: 'Клеймо короба' }
             ],
             infobox: {
                 'Тип': 'Изолирующий',
                 'Год выпуска': '1964',
-                'Производитель': 'СССР',
+                'Создано': 'СССР',
                 'Время защиты': '50-60 мин (нагрузка)',
+                'Состояние': 'Коллекционное'
+            }
+        },
+        {
+            id: 'p5',
+            title: 'Граждансикй противогаз, тип 5',
+            category: 'items',
+            image: 'gp5mask.jpg',
+            address: 'Музейная коллекция',
+            state: '1981 г.',
+            stateClass: 'state-90',
+            shortDesc: 'Самый массовый противогаз в мире.',
+            fullDesc: `
+                <h2>📜 История</h2>
+                <p>Противогаз ГП-5 — это классический фильтрующий противогаз времён холодной войны, предназначенный для защиты органов дыхания, глаз и кожи лица для защиты от отравляющих веществ, радиоактивной пыли и бактериальных аэрозолей. Производился до 1990х годов. Всего было выпущено более 800 млн штук, т.к. на каждого гражданина СССР должно было хватать по три противогаза.</p>
+                
+                <h2>🛠 Конструкция</h2>
+                <p>В состав противогаза входят лицевая часть ШМ-62 или ШМ-62у, сумка, незапотевающие плёнки (НП), инструкция, фильтрующе-поглощающая коробка (ФПК). ШМ-62у отличается от ШМ-62 толщиной резины. Маска выпускалась в пяти рамзерах: 0, 1, 2, 3, 4. Так же имеется вариант из чёрной резины - ШМП (шлем-маска специальная). Маска имеет очковый узел из двух линз в металических ободах. Клапанная коробка снабжена стандартной резьбой 40х4 мм, что позволяет использовать любой стандартный фильтр. От клапана вдоха воздух проходит по резиновым трубкам к очкам, что предотвращает их запотевание. Очки имеют крепление для НП.</p>
+                
+                <h2>⚠️ Важно</h2>
+                <p>ФПК ГП-5 не защищает от аммиака и угарного газа(необходимо использовать ДПГ-3 или ДП-2 соотвественно).</p>
+                
+                <h2>📦 Модель в коллекции</h2>
+                <p>Комплектация: 6 масок ШМ-62у разных размеров. Даты изготовления: 1978-1981 гг. Состояние: Хорошее.</p>
+            `,
+            gallery: [
+                { src: 'gp5complect.jpg', caption: 'Компект' },
+                { src: 'gp5mask.jpg', caption: 'Маска ШМ-62у' },
+                { src: 'gp5army.jpg', caption: 'Военный в ГП-5' },
+                { src: 'gp5onman.jpg', caption: 'ГП-5 на человеке' },
+                { src: 'gp5filter.jpg', caption: 'ФПК' },
+                { src: 'gp5mask2.jpg', caption: 'Клейма на маске' },
+                { src: 'gp5inside.jpg', caption: 'Маска изнутри' },
+                { src: 'gp5kk.jpg', caption: 'Клапанная коробка' },
+                { src: 'gp5stalker.jpg', caption: 'ГП-5' }
+            ],
+            infobox: {
+                'Тип': 'Изолирующий',
+                'Год выпуска': '1981',
+                'Создано': 'СССР',
+                'Время защиты': 'зависит от фильтра',
                 'Состояние': 'Коллекционное'
             }
         }
     ]
 };
+
+// ============ ЛАЙТБОКС ============
+let currentGallery = [];
+let currentImageIndex = 0;
+
+function createLightbox() {
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.id = 'lightbox';
+    
+    lightbox.innerHTML = `
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-prev" onclick="prevImage()">❮</span>
+        <span class="lightbox-next" onclick="nextImage()">❯</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    `;
+    
+    document.body.appendChild(lightbox);
+    
+    // Закрытие по клику на фон
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+    
+    // Клавиши
+    document.addEventListener('keydown', handleLightboxKeys);
+}
+
+function handleLightboxKeys(e) {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox || !lightbox.classList.contains('active')) return;
+    
+    switch(e.key) {
+        case 'Escape':
+            closeLightbox();
+            break;
+        case 'ArrowLeft':
+            prevImage();
+            break;
+        case 'ArrowRight':
+            nextImage();
+            break;
+    }
+}
+
+function openLightbox(images, startIndex = 0) {
+    currentGallery = images;
+    currentImageIndex = startIndex;
+    
+    const lightbox = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const caption = document.getElementById('lightbox-caption');
+    
+    img.src = `images/${currentGallery[currentImageIndex].src}`;
+    caption.textContent = currentGallery[currentImageIndex].caption;
+    
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Показываем/скрываем стрелки
+    updateLightboxArrows();
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function nextImage() {
+    if (currentGallery.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % currentGallery.length;
+    updateLightboxImage();
+}
+
+function prevImage() {
+    if (currentGallery.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + currentGallery.length) % currentGallery.length;
+    updateLightboxImage();
+}
+
+function updateLightboxImage() {
+    const img = document.getElementById('lightbox-img');
+    const caption = document.getElementById('lightbox-caption');
+    
+    img.src = `images/${currentGallery[currentImageIndex].src}`;
+    caption.textContent = currentGallery[currentImageIndex].caption;
+    updateLightboxArrows();
+}
+
+function updateLightboxArrows() {
+    const prev = document.querySelector('.lightbox-prev');
+    const next = document.querySelector('.lightbox-next');
+    
+    if (currentGallery.length <= 1) {
+        prev.style.display = 'none';
+        next.style.display = 'none';
+    } else {
+        prev.style.display = 'flex';
+        next.style.display = 'flex';
+    }
+}
+
+// Глобальные функции для лайтбокса
+window.closeLightbox = closeLightbox;
+window.prevImage = prevImage;
+window.nextImage = nextImage;
 
 // ============ ФУНКЦИИ ОТРИСОВКИ ============
 
@@ -236,7 +429,6 @@ function showCategory(categoryId) {
         <p style="margin-top: 20px;"><a href="#" onclick="showHomePage(); return false;">← Вернуться на главную</a></p>
     `;
     
-    // Обновляем URL
     window.history.pushState({}, '', `?category=${categoryId}`);
 }
 
@@ -244,7 +436,6 @@ function showCategory(categoryId) {
 function showHomePage() {
     const mainContent = document.getElementById('mainContent');
     
-    // Получаем все статьи для сетки
     const featuredArticles = database.articles.slice(0, 6);
     let cardsHtml = '';
     featuredArticles.forEach(art => {
@@ -310,13 +501,13 @@ function showArticle(articleId) {
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
     
-    // Генерируем галерею если есть
+    // Генерируем галерею с onclick для лайтбокса
     let galleryHtml = '';
     if (article.gallery && article.gallery.length > 0) {
         let items = '';
-        article.gallery.forEach(img => {
+        article.gallery.forEach((img, index) => {
             items += `
-                <div class="gallery-item">
+                <div class="gallery-item" onclick="openLightbox(${JSON.stringify(article.gallery).replace(/"/g, '&quot;')}, ${index})">
                     <img src="images/${img.src}" alt="${img.caption}" loading="lazy">
                     <div class="gallery-caption">${img.caption}</div>
                 </div>
@@ -350,19 +541,23 @@ function showArticle(articleId) {
             </div>
             <div class="infobox">
                 <div class="infobox-title">Информация об объекте</div>
-                <div class="infobox-image" style="background-image: url('images/${article.image}');"></div>
-                ${infoboxRows}
-                <div class="infobox-row">
-                    <div class="infobox-label">📍 Адрес</div>
-                    <div class="infobox-value">${article.address}</div>
+                <div class="infobox-image">
+                    <img src="images/${article.image}" alt="${article.title}" onclick="openLightbox([{src: '${article.image}', caption: '${article.title}'}], 0)">
                 </div>
-                <div class="infobox-row">
-                    <div class="infobox-label">🟩 Состояние</div>
-                    <div class="infobox-value"><span class="state-badge ${article.stateClass}">${article.state}</span></div>
-                </div>
-                <div class="infobox-row">
-                    <div class="infobox-label">📂 Категория</div>
-                    <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.name : article.category}</a></div>
+                <div class="infobox-content">
+                    ${infoboxRows}
+                    <div class="infobox-row">
+                        <div class="infobox-label">📍 Адрес</div>
+                        <div class="infobox-value">${article.address}</div>
+                    </div>
+                    <div class="infobox-row">
+                        <div class="infobox-label">🟩 Состояние</div>
+                        <div class="infobox-value"><span class="state-badge ${article.stateClass}">${article.state}</span></div>
+                    </div>
+                    <div class="infobox-row">
+                        <div class="infobox-label">📂 Категория</div>
+                        <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.name : article.category}</a></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -449,6 +644,7 @@ function handleRouting() {
 
 // ============ ИНИЦИАЛИЗАЦИЯ ============
 document.addEventListener('DOMContentLoaded', () => {
+    createLightbox();
     renderCategoryMenu();
     handleRouting();
     
@@ -466,9 +662,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Делаем функции глобальными для onclick
+// Делаем функции глобальными
 window.showCategory = showCategory;
 window.showHomePage = showHomePage;
 window.showArticle = showArticle;
 window.randomArticle = randomArticle;
 window.performSearch = performSearch;
+window.openLightbox = openLightbox;
