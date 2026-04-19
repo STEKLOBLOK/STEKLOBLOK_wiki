@@ -594,5 +594,32 @@ a:hover {
         order: 1;
     }
 }
+/* === ЗАКРЕПЛЕНИЕ ИНФОБОКСА НА МОБИЛЬНЫХ === */
+@media (max-width: 800px) {
+    .article-container {
+        flex-direction: column;
+    }
+    
+    /* Инфобокс отображается сверху */
+    .infobox {
+        order: -1; /* Это уже есть, оставляем */
+        margin-bottom: 20px;
+    }
+    
+    /* Основной текст идет после инфобокса */
+    .article-text {
+        order: 1;
+    }
+    
+    /* Уменьшаем отступы для мобильных */
+    .infobox-content {
+        padding: 10px;
+    }
+    
+    .infobox-title {
+        font-size: 1.1rem;
+        padding: 8px;
+    }
+}
     }
 }
