@@ -279,13 +279,13 @@ const database = {
             fullDesc: `
                 <h2>📜 История</h2>
                 <p>ШМС разработана в 1960-х годах. Использовалась офицерским составом, водителями. Выпускалась до самого распада СССР. Используется в комлпектах РШ-4 с фильтром ЕО-16. Создана как замена маске ШМ-41. Так же существует модификация ШМС-Р. Применяется в противогазе ПРВ-У для заправщиков ракет. Имеется модификация ЛП-2 для лётчиков. Отличие - питьевая система и новый клапан выдоха.</p>
-		<p>ФГП-130В - классический промышленный фильтр. Применялся на химических производствах.<p>
-		<p>Данный комплект обнаружен в бомбоуежище химического комбината.<p>
+                <p>ФГП-130В - классический промышленный фильтр. Применялся на химических производствах.</p>
+                <p>Данный комплект обнаружен в бомбоубежище химического комбината.</p>
                 
                 <h2>🛠 Конструкция</h2>
                 <p>Имеет специальную конструкцию очкового узла, это позволяет исользовать оптические приборы совместно с маской. Клапанная коробка досталась от предшестенника ШМ-41. Возможна устновка утпеляющих манжетов. В маску воздух поступает через клапан, по резиновым трубкам по бокам маски и обдувает глаза сверху. Резьба стандартная 40х4 мм ГОСТ.</p>
-		<p>ФГП-130В представляет собой стальной бачок жёлтого цвета с белой полосой на боку. Жёлтый цвет обозначает защиту от кислых веществ и из паров. Белая полоса - противопыльная, противотуманная, противоаэрозольная защита. Фильтр закрывается пластиковой крышкой сверху и резиновой заглушкой снизу)<p>
-		<p>В комплекте присутствует гофротруба резинотканевая. Это необходимо из-за большого веса ФПК, около 900 грамм. ФПК размещается в сумке типа "Е". Данная сумка характеризуется наличием кармана для ФПК.
+                <p>ФГП-130В представляет собой стальной бачок жёлтого цвета с белой полосой на боку. Жёлтый цвет обозначает защиту от кислых веществ и из паров. Белая полоса - противопыльная, противотуманная, противоаэрозольная защита. Фильтр закрывается пластиковой крышкой сверху и резиновой заглушкой снизу)<p>
+                <p>В комплекте присутствует гофротруба резинотканевая. Это необходимо из-за большого веса ФПК, около 900 грамм. ФПК размещается в сумке типа "Е". Данная сумка характеризуется наличием кармана для ФПК.
                 
                 <h2>⚠️ Важно</h2>
                 <p>Защищает от кислотных газов и паров (диоксида серы, хлора, сероводорода, синильной кислоты, оксидов азота, хлороводорода, фосгена), фосфорорганических и хлорорганических пестицидов, а так же от пыли.</p>
@@ -306,7 +306,7 @@ const database = {
                 'Время защиты': 'зависит от фильтра',
                 'Состояние': 'Коллекционное'
             }
-	}
+        }
     ]
 };
 
@@ -331,14 +331,12 @@ function createLightbox() {
     
     document.body.appendChild(lightbox);
     
-    // Закрытие по клику на фон
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             closeLightbox();
         }
     });
     
-    // Клавиши
     document.addEventListener('keydown', handleLightboxKeys);
 }
 
@@ -373,7 +371,6 @@ function openLightbox(images, startIndex = 0) {
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Показываем/скрываем стрелки
     updateLightboxArrows();
 }
 
@@ -417,14 +414,12 @@ function updateLightboxArrows() {
     }
 }
 
-// Глобальные функции для лайтбокса
 window.closeLightbox = closeLightbox;
 window.prevImage = prevImage;
 window.nextImage = nextImage;
 
 // ============ ФУНКЦИИ ОТРИСОВКИ ============
 
-// Создание меню категорий
 function renderCategoryMenu() {
     const menu = document.getElementById('categoryMenu');
     if (!menu) return;
@@ -436,7 +431,6 @@ function renderCategoryMenu() {
     menu.innerHTML = html;
 }
 
-// Показать категорию
 function showCategory(categoryId) {
     const category = database.categories.find(c => c.id === categoryId);
     const articles = database.articles.filter(a => a.category === categoryId);
@@ -470,9 +464,13 @@ function showCategory(categoryId) {
     `;
     
     window.history.pushState({}, '', `?category=${categoryId}`);
+    
+    // На мобильных закрываем сайдбар после перехода
+    if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
+        collapseSidebar();
+    }
 }
 
-// Показать главную страницу
 function showHomePage() {
     const mainContent = document.getElementById('mainContent');
     
@@ -504,17 +502,15 @@ function showHomePage() {
                 <p>Проект развивается, присылайте свои материалы через кнопку «Обратная связь».</p>
             </div>
 
-            
-
             <h2>🏛️ Последние добавленные объекты</h2>
             <div class="cards-grid">
                 ${cardsHtml}
             </div>
-<div class="youtube-section">
+            <div class="youtube-section">
                 <h2>🎬 Видеоархив проекта</h2>
                 <div class="youtube-wrapper">
                     <iframe width="560" height="315" 
-                            src="https://www.youtube.com/watch?v=mNf2xctWUBI" 
+                            src="https://www.youtube.com/embed/mNf2xctWUBI" 
                             title="YouTube video player" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                             allowfullscreen>
@@ -531,9 +527,13 @@ function showHomePage() {
     `;
     
     window.history.pushState({}, '', 'index.html');
+    
+    // На мобильных закрываем сайдбар после перехода
+    if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
+        collapseSidebar();
+    }
 }
 
-// Показать статью
 function showArticle(articleId) {
     const article = database.articles.find(a => a.id === articleId);
     if (!article) return;
@@ -541,7 +541,6 @@ function showArticle(articleId) {
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
     
-    // Генерируем галерею с onclick для лайтбокса
     let galleryHtml = '';
     if (article.gallery && article.gallery.length > 0) {
         let items = '';
@@ -561,7 +560,6 @@ function showArticle(articleId) {
         `;
     }
     
-    // Генерируем строки инфобокса
     let infoboxRows = '';
     for (const [key, value] of Object.entries(article.infobox)) {
         infoboxRows += `
@@ -608,15 +606,18 @@ function showArticle(articleId) {
     `;
     
     window.history.pushState({}, '', `?article=${articleId}`);
+    
+    // На мобильных закрываем сайдбар после перехода
+    if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
+        collapseSidebar();
+    }
 }
 
-// Случайная статья
 function randomArticle() {
     const randomIndex = Math.floor(Math.random() * database.articles.length);
     showArticle(database.articles[randomIndex].id);
 }
 
-// Поиск
 function performSearch(query) {
     if (!query || query.trim() === '') return;
     
@@ -665,9 +666,13 @@ function performSearch(query) {
             <p><a href="#" onclick="showHomePage(); return false;">← Вернуться на главную</a></p>
         `;
     }
+    
+    // На мобильных закрываем сайдбар после перехода
+    if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
+        collapseSidebar();
+    }
 }
 
-// Обработка URL при загрузке
 function handleRouting() {
     const params = new URLSearchParams(window.location.search);
     const articleId = params.get('article');
@@ -682,10 +687,162 @@ function handleRouting() {
     }
 }
 
+// ============ БОКОВАЯ ПАНЕЛЬ ============
+let sidebarState = {
+    isOpen: false,
+    isMobile: window.innerWidth <= 800
+};
+
+function initSidebar() {
+    const sidebar = document.querySelector('.wiki-sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (!sidebar || !toggleBtn) return;
+    
+    // Функция для проверки мобильного режима
+    function checkMobileAndSetup() {
+        sidebarState.isMobile = window.innerWidth <= 800;
+        
+        if (!sidebarState.isMobile) {
+            // На десктопе панель всегда открыта, кнопка скрыта через CSS
+            sidebar.classList.remove('collapsed');
+            if (overlay) overlay.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+            sidebarState.isOpen = true;
+            toggleBtn.style.display = 'none';
+            return false; // не мобильный режим
+        } else {
+            // На мобильных показываем кнопку
+            toggleBtn.style.display = 'flex';
+            return true; // мобильный режим
+        }
+    }
+    
+    // Инициализация в зависимости от режима
+    const isMobileNow = checkMobileAndSetup();
+    
+    if (isMobileNow) {
+        // На мобильных по умолчанию панель закрыта
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        if (savedState === 'false') {
+            expandSidebar();
+        } else {
+            collapseSidebar();
+        }
+    }
+    
+    // Обработчик кнопки
+    toggleBtn.addEventListener('click', () => {
+        if (!sidebarState.isMobile) return; // На десктопе игнорируем
+        
+        if (sidebarState.isOpen) {
+            collapseSidebar();
+        } else {
+            expandSidebar();
+        }
+    });
+    
+    // Закрытие по оверлею
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            if (sidebarState.isMobile && sidebarState.isOpen) {
+                collapseSidebar();
+            }
+        });
+    }
+    
+    // Отслеживание изменения размера экрана
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            const wasMobile = sidebarState.isMobile;
+            const isMobileNow = checkMobileAndSetup();
+            
+            // При переключении с мобильного на десктоп
+            if (wasMobile && !isMobileNow) {
+                // Всё уже настроено в checkMobileAndSetup()
+            }
+            // При переключении с десктопа на мобильный
+            else if (!wasMobile && isMobileNow) {
+                const savedState = localStorage.getItem('sidebarCollapsed');
+                if (savedState === 'false') {
+                    expandSidebar();
+                } else {
+                    collapseSidebar();
+                }
+            }
+        }, 100);
+    });
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebarState.isMobile && sidebarState.isOpen) {
+            collapseSidebar();
+        }
+    });
+}
+
+function collapseSidebar() {
+    const sidebar = document.querySelector('.wiki-sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (!sidebar) return;
+    
+    sidebar.classList.add('collapsed');
+    if (toggleBtn) {
+        toggleBtn.classList.add('collapsed');
+        const arrow = toggleBtn.querySelector('.arrow');
+        if (arrow) arrow.textContent = '▶';
+    }
+    
+    if (overlay) {
+        overlay.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+    }
+    
+    sidebarState.isOpen = false;
+    localStorage.setItem('sidebarCollapsed', 'true');
+}
+
+function expandSidebar() {
+    const sidebar = document.querySelector('.wiki-sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (!sidebar) return;
+    
+    sidebar.classList.remove('collapsed');
+    if (toggleBtn) {
+        toggleBtn.classList.remove('collapsed');
+        const arrow = toggleBtn.querySelector('.arrow');
+        if (arrow) arrow.textContent = '◀';
+    }
+    
+    if (overlay) {
+        overlay.classList.add('active');
+        document.body.classList.add('sidebar-open');
+    }
+    
+    sidebarState.isOpen = true;
+    localStorage.setItem('sidebarCollapsed', 'false');
+}
+
+// Глобальные функции для onclick
+window.showCategory = showCategory;
+window.showHomePage = showHomePage;
+window.showArticle = showArticle;
+window.randomArticle = randomArticle;
+window.performSearch = performSearch;
+window.openLightbox = openLightbox;
+
 // ============ ИНИЦИАЛИЗАЦИЯ ============
 document.addEventListener('DOMContentLoaded', () => {
     createLightbox();
     renderCategoryMenu();
+    initSidebar();
     handleRouting();
     
     // Поиск
@@ -700,34 +857,65 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') performSearch(searchInput.value);
         });
     }
-});
-const themeToggle = document.getElementById('themeToggle');
-if (themeToggle) {
-    // Проверяем сохранённую тему
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.textContent = '☀️';
-    }
     
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            themeToggle.textContent = '🌙';
-            localStorage.setItem('theme', 'light');
-        } else {
+    // Тема
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
             themeToggle.textContent = '☀️';
-            localStorage.setItem('theme', 'dark');
         }
-    });
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+});
+
+// Перехват всех переходов через прямое патчингование функций
+const originalShowCategory = showCategory;
+const originalShowHomePage = showHomePage;
+const originalShowArticle = showArticle;
+const originalPerformSearch = performSearch;
+
+function scrollToTop() {
+    window.scrollTo(0, 0);
+    const mainContent = document.getElementById('mainContent');
+    if (mainContent) mainContent.scrollTop = 0;
 }
 
-// Делаем функции глобальными
-window.showCategory = showCategory;
-window.showHomePage = showHomePage;
-window.showArticle = showArticle;
-window.randomArticle = randomArticle;
-window.performSearch = performSearch;
-window.openLightbox = openLightbox;
+window.showCategory = function(categoryId) {
+    originalShowCategory(categoryId);
+    scrollToTop();
+};
+
+window.showHomePage = function() {
+    originalShowHomePage();
+    scrollToTop();
+};
+
+window.showArticle = function(articleId) {
+    originalShowArticle(articleId);
+    scrollToTop();
+};
+
+window.performSearch = function(query) {
+    originalPerformSearch(query);
+    scrollToTop();
+};
+
+// Дополнительно для обработки popstate (кнопки назад/вперёд)
+window.addEventListener('popstate', function() {
+    handleRouting();
+    scrollToTop();
+});
