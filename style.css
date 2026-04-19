@@ -1,4 +1,40 @@
-/* === ПЕРЕМЕННЫЕ И СБРОС === */
+[data-theme="dark"] {
+    --wiki-bg: #1a1a1a;
+    --wiki-header-bg: #111;
+    --wiki-header-text: #ddd;
+    --wiki-link: #8ab4f8;
+    --wiki-link-visited: #c58af9;
+    --card-bg: #2d2d2d;
+    --sidebar-bg: #252525;
+    --accent-color: #e74c3c;
+    color-scheme: dark;
+}
+
+[data-theme="dark"] .wiki-content {
+    background: #2b2b2b;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+[data-theme="dark"] .infobox {
+    background: #333;
+    border-color: #555;
+}
+
+[data-theme="dark"] .card {
+    background: #2d2d2d;
+    border-color: #444;
+}
+
+[data-theme="dark"] .wiki-sidebar {
+    background: #252525;
+    border-color: #444;
+}
+
+[data-theme="dark"] .greeting-card {
+    background: #1e3a5f;
+    border-left-color: #8ab4f8;
+}
 :root {
     --wiki-bg: #f6f6f6;
     --wiki-header-bg: #2c3e50;
@@ -519,6 +555,23 @@ a:hover {
 
 /* Адаптив */
 @media (max-width: 800px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .logo-link {
+        font-size: 1.8rem;  /* уменьшаем размер */
+    }
+    .wiki-nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .nav-search input {
+        width: 140px;
+    }
+    .logo-sub {
+        white-space: nowrap;
+    }
     .wiki-layout { flex-direction: column; }
     .wiki-sidebar { width: 100%; }
     .header-container { flex-direction: column; gap: 15px; }
@@ -530,5 +583,16 @@ a:hover {
         width: 40px;
         height: 40px;
         font-size: 30px;
+    .article-container {
+        flex-direction: column;
+    }
+    .infobox {
+        order: -1; /* поднимает инфобокс наверх */
+        margin-bottom: 20px;
+    }
+    .article-text {
+        order: 1;
+    }
+}
     }
 }
