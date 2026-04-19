@@ -701,6 +701,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+    // Проверяем сохранённую тему
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            themeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+}
 
 // Делаем функции глобальными
 window.showCategory = showCategory;
