@@ -457,14 +457,20 @@ function showHomePage() {
     
     mainContent.innerHTML = `
         <article class="main-article">
-            <h1 class="page-title">Добро пожаловать в энциклопедию Стеклоблок!</h1>
+            <h1 class="page-title">Добро пожаловать в энциклопедию!</h1>
             
             <div class="greeting-card">
                 <p>👋 Этот проект разработан для любителей советской архитектуры. Вы можете выбирать разные объекты, которые я самолично посетил и сфотографировал. 📸</p>
                 <p>Проект развивается, присылайте свои материалы через кнопку «Обратная связь».</p>
             </div>
 
-            <div class="youtube-section">
+            
+
+            <h2>🏛️ Последние добавленные объекты</h2>
+            <div class="cards-grid">
+                ${cardsHtml}
+            </div>
+<div class="youtube-section">
                 <h2>🎬 Видеоархив проекта</h2>
                 <div class="youtube-wrapper">
                     <iframe width="560" height="315" 
@@ -474,12 +480,6 @@ function showHomePage() {
                             allowfullscreen>
                     </iframe>
                 </div>
-                <p class="caption">🎥 Замените ID видео в коде (сейчас заглушка).</p>
-            </div>
-
-            <h2>🏛️ Последние добавленные объекты</h2>
-            <div class="cards-grid">
-                ${cardsHtml}
             </div>
             
             <p style="margin-top: 30px; text-align: center;">
