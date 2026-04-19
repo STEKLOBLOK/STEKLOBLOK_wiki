@@ -583,6 +583,7 @@ a:hover {
         width: 40px;
         height: 40px;
         font-size: 30px;
+}
     .article-container {
         flex-direction: column;
     }
@@ -620,4 +621,264 @@ a:hover {
         font-size: 1.1rem;
         padding: 8px;
     }
-}ы
+}
+/* === БОКОВАЯ ПАНЕЛЬ С АНИМАЦИЕЙ === */
+
+/* Контейнер для всего layout */
+.wiki-layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
+    gap: 20px;
+    position: relative;
+}
+
+/* Боковая панель */
+.wiki-sidebar {
+    flex: 0 0 260px;
+    min-width: 0;
+    background: var(--sidebar-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                flex 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Скрытая панель */
+.wiki-sidebar.collapsed {
+    flex: 0 0 0;
+    transform: translateX(-20px);
+    opacity: 0;
+    margin-right: -260px;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Кнопка переключения панели */
+.sidebar-toggle {
+    width: 36px;
+    height: 36px;
+    background: var(--wiki-header-bg);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 18px;
+}
+
+.sidebar-toggle:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.sidebar-toggle .arrow {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-toggle.collapsed .arrow {
+    transform: rotate(180deg);
+}
+
+/* Основной контент */
+.wiki-content {
+    flex: 1;
+    min-width: 0;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    min-height: 600px;
+}
+
+/* Оверлей при открытой панели на мобильных */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Блокировка скролла body только на мобильных при открытой панели */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 800px) {
+    .wiki-sidebar {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-height: none;
+        height: calc(100vh - 70px);
+        z-index: 1000;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+        margin-right: 0;
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto; /* Включаем прокрутку */
+        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    }
+    
+    /* Кастомный скроллбар для мобильных (опционально) */
+    .wiki-sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .wiki-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .wiki-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+    }
+    
+    .wiki-sidebar.collapsed {
+        transform: translateX(-100%);
+        margin-right: 0;
+        flex: 0 0 auto;
+        opacity: 1;
+        pointer-events: none;
+    }
+    
+    .sidebar-toggle {
+        position: fixed !important;
+        left: 15px !important;
+        top: 80px !important;
+        width: 40px;
+        height: 40px;
+        z-index: 1001;
+    }
+    
+    .wiki-layout {
+        padding-left: 20px;
+    }
+    
+    .wiki-content {
+        width: 100%;
+    }
+    
+    /* Затемняем кнопку при открытой панели */
+    body.sidebar-open .sidebar-toggle {
+        opacity: 0.6;
+    }
+}
+
+/* Стили для темной темы */
+[data-theme="dark"] .sidebar-toggle {
+    background: #333;
+    border-color: #555;
+}
+
+[data-theme="dark"] .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .wiki-sidebar.collapsed {
+    opacity: 0;
+}
+
+/* Плавность */
+.wiki-sidebar {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+/* Улучшенный скроллбар для панели на десктопе */
+.wiki-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.wiki-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wiki-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.wiki-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+/* Кнопка переключения панели - по умолчанию скрыта на десктопе */
+.sidebar-toggle {
+    display: none; /* Скрываем на десктопе */
+    width: 36px;
+    height: 36px;
+    background: var(--wiki-header-bg);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 18px;
+}
+
+.sidebar-toggle:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.sidebar-toggle .arrow {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-toggle.collapsed .arrow {
+    transform: rotate(180deg);
+}
+
+/* Адаптив для мобильных - показываем кнопку */
+@media (max-width: 800px) {
+    .sidebar-toggle {
+        display: flex !important; /* Показываем только на мобильных */
+        position: fixed !important;
+        left: 15px !important;
+        top: 80px !important;
+        width: 40px;
+        height: 40px;
+        z-index: 1001;
+    }
+    
+    /* Остальные мобильные стили... */
+}
