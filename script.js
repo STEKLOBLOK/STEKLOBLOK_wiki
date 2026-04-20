@@ -1144,26 +1144,31 @@ function loadGiscus(theme) {
     const giscusContainer = document.querySelector('.giscus');
     if (!giscusContainer) return;
     
-    // Очищаем старый фрейм, если он был
+    // Очищаем старый фрейм
     giscusContainer.innerHTML = '';
     
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     
-    // Устанавливаем все необходимые атрибуты для Giscus
+    // Настройки репозитория (оставляем как есть)
     script.setAttribute('data-repo', 'STEKLOBLOK/STEKLOBLOK_wiki');
     script.setAttribute('data-repo-id', 'R_kgDOP7YyfA');
     script.setAttribute('data-category', 'Comments');
     script.setAttribute('data-category-id', 'DIC_kwDOP7YyfM4C7Q60');
-    script.setAttribute('data-mapping', 'pathname');
+    
+    // ========== ГЛАВНОЕ ИЗМЕНЕНИЕ ==========
+    // Принудительно используем поиск по номеру обсуждения
+    script.setAttribute('data-mapping', 'number');
+    // Указываем номер обсуждения, которое мы создадим вручную
+    script.setAttribute('data-term', '1');
+    // =======================================
+    
+    // Остальные настройки
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
-    
-    // Используем переданную тему (theme) вместо хардкода "preferred_color_scheme"
     script.setAttribute('data-theme', theme);
-    
     script.setAttribute('data-lang', 'ru');
     script.setAttribute('crossorigin', 'anonymous');
     script.async = true;
