@@ -747,6 +747,7 @@ function showArticle(articleId) {
         `;
     }
     
+    // === НАЧАЛО ШАБЛОННОЙ СТРОКИ ===
     mainContent.innerHTML = `
         <h1 class="page-title">${article.title}</h1>
         <div class="article-container">
@@ -774,7 +775,7 @@ function showArticle(articleId) {
                         <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
                     </div>
                 </div>
-                            </div> <!-- Закрытие infobox -->
+            </div> <!-- Закрытие infobox -->
         </div> <!-- Закрытие article-container -->
 
         <hr style="margin: 30px 0;">
@@ -785,14 +786,14 @@ function showArticle(articleId) {
             <a href="#" onclick="window.history.back(); return false;">← Назад</a> | 
             <a href="#" onclick="showHomePage(); return false;">🏠 На главную</a>
         </p>
-    `;
-            </div>
-        </div>
-        <p style="margin-top: 20px;">
-            <a href="#" onclick="window.history.back(); return false;">← Назад</a> | 
-            <a href="#" onclick="showHomePage(); return false;">🏠 На главную</a>
-        </p>
-    `;
+    `; 
+    // === КОНЕЦ ШАБЛОННОЙ СТРОКИ (ЗДЕСЬ ТОЛЬКО ОДНА ЗАКРЫВАЮЩАЯ КАВЫЧКА) ===
+    
+    // Загружаем комментарии Giscus с текущей темой
+    // Убедись, что функции loadGiscus и getCurrentGiscusTheme существуют (добавим их ниже)
+    if (typeof loadGiscus === 'function') {
+        loadGiscus(getCurrentGiscusTheme());
+    }
     
     window.history.pushState({}, '', `?article=${articleId}`);
     
@@ -1110,3 +1111,36 @@ window.addEventListener('popstate', function() {
     handleRouting();
     scrollToTop();
 });
+// ============ GISCUS (КОММЕНТАРИИ) ============
+function loadGiscus(theme) {
+    const giscusContainer = document.querySelector('.giscus');
+    if (!giscusContainer) return;
+    
+    // Очищаем старый фрейм, если он был
+    giscusContainer.innerHTML = '';
+    
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    
+    // !!! ВАЖНО: ЗАМЕНИ ДАННЫЕ НИЖЕ НА СВОИ С giscus.app !!!
+script.setAttribute('data-repo', 'STEKLOBLOK/STEKLOBLOK_wiki');
+script.setAttribute('data-repo-id', 'R_kgDOP7YyfA');
+script.setAttribute('data-category', 'Comments');
+script.setAttribute('data-category-id', 'DIC_kwDOP7YyfM4C7Q60');
+script.setAttribute('data-mapping', 'pathname');
+script.setAttribute('data-strict', '0');
+script.setAttribute('data-reactions-enabled', '1');
+script.setAttribute('data-emit-metadata', '0');
+script.setAttribute('data-input-position', 'bottom');
+script.setAttribute('data-theme', theme);
+script.setAttribute('data-lang', 'ru');
+script.setAttribute('crossorigin', 'anonymous');
+script.async = true;
+    
+    giscusContainer.appendChild(script);
+}
+
+function getCurrentGiscusTheme() {
+    // Проверяем data-theme у html элемента
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+}
