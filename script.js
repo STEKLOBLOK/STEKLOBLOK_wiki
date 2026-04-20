@@ -70,9 +70,8 @@ const database = {
                 <p>Школа заброшена и пострадала от времени, огня, вандалов.</p>
             `,
             gallery: [
-                { src: 'school_main.jpg', caption: 'Историческое фото' },
+                { src: 'school_history.jpg', caption: 'Историческое фото' },
                 { src: 'school_abandoned.jpg', caption: 'Современность' },
-                { src: 'school_abandoned3.jpg', caption: 'Современность' }
                 { src: 'school_abandoned2.jpg', caption: 'Современность' }
             ],
             infobox: {
