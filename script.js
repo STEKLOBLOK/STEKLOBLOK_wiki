@@ -1063,26 +1063,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initSidebar();
     handleRouting();
 
-themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-        themeToggle.textContent = '🌙';
-        localStorage.setItem('theme', 'light');
-        var newTheme = 'light';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.textContent = '☀️';
-        localStorage.setItem('theme', 'dark');
-        var newTheme = 'dark';
-    }
-    // Перезагружаем Giscus с новой темой, если находимся на странице статьи
-    if (window.location.search.includes('article=')) {
-        const giscusTheme = newTheme === 'dark' ? 'dark' : 'light';
-        loadGiscus(giscusTheme);
-    }
-});
-    
     // Поиск
     const searchInput = document.getElementById('globalSearchInput');
     const searchBtn = document.getElementById('globalSearchBtn');
@@ -1096,7 +1076,7 @@ themeToggle.addEventListener('click', () => {
         });
     }
     
-    // Тема
+    // Тема - исправленный блок
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
         const savedTheme = localStorage.getItem('theme');
@@ -1107,14 +1087,22 @@ themeToggle.addEventListener('click', () => {
         
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme;
             if (currentTheme === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
                 themeToggle.textContent = '🌙';
                 localStorage.setItem('theme', 'light');
+                newTheme = 'light';
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 themeToggle.textContent = '☀️';
                 localStorage.setItem('theme', 'dark');
+                newTheme = 'dark';
+            }
+            // Перезагружаем Giscus с новой темой, если находимся на странице статьи
+            if (window.location.search.includes('article=')) {
+                const giscusTheme = newTheme === 'dark' ? 'dark' : 'light';
+                loadGiscus(giscusTheme);
             }
         });
     }
