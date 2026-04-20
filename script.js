@@ -1185,5 +1185,4 @@ function loadGiscus(theme = 'preferred_color_scheme') {
 
     container.innerHTML = ''; // очищаем контейнер
     container.appendChild(script);
-    }
 }
