@@ -626,7 +626,6 @@ function showCategory(categoryId, giscusParams = {}) {
         <p style="margin-top: 20px;"><a href="#" onclick="showHomePage(); return false;">← Вернуться на главную</a></p>
     `;
     
-    window.history.pushState({}, '', `?category=${categoryId}`);
     
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
@@ -718,8 +717,7 @@ function showHomePage(giscusParams = {}) {
             </div>
         </article>
     `;
-    
-    window.history.pushState({}, '', 'index.html');
+
     
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
@@ -817,7 +815,7 @@ function showArticle(articleId, giscusParams = {}) {
         loadGiscus(getCurrentGiscusTheme());
     }
     
-    window.history.pushState({}, '', `?article=${articleId}`);
+
     
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
