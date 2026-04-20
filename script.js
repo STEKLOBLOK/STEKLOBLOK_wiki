@@ -774,6 +774,18 @@ function showArticle(articleId) {
                         <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
                     </div>
                 </div>
+                            </div> <!-- Закрытие infobox -->
+        </div> <!-- Закрытие article-container -->
+
+        <hr style="margin: 30px 0;">
+        <h2>💬 Комментарии</h2>
+        <div class="giscus" style="margin-top: 20px;"></div>
+
+        <p style="margin-top: 20px;">
+            <a href="#" onclick="window.history.back(); return false;">← Назад</a> | 
+            <a href="#" onclick="showHomePage(); return false;">🏠 На главную</a>
+        </p>
+    `;
             </div>
         </div>
         <p style="margin-top: 20px;">
@@ -1058,6 +1070,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
 
 // Перехват всех переходов через прямое патчингование функций
 const originalShowCategory = showCategory;
