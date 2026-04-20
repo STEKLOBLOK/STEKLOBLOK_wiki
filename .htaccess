@@ -1,0 +1,1 @@
+RewriteRule page.html /another-page.html [NC, QSA, R=301,L]
