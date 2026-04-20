@@ -1,0 +1,7 @@
+exclude: [vendor, Gemfile, Gemfile.lock, node_modules]
+keep_files: [assets, uploads]
+defaults:
+  - scope:
+      path: ""
+    values:
+      permalink: /:path/
