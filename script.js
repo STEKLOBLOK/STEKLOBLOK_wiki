@@ -1139,44 +1139,38 @@ window.addEventListener('popstate', function() {
     handleRouting();
     scrollToTop();
 });
-// ============ GISCUS (КОММЕНТАРИИ) ============
-function loadGiscus(theme) {
-    const giscusContainer = document.querySelector('.giscus');
-    if (!giscusContainer) return;
-    
-    // Очищаем старый фрейм
-    giscusContainer.innerHTML = '';
-    
+function loadGiscus() {
+    // Проверяем, не загружен ли уже виджет
+    if (document.querySelector('script[src="https://giscus.app/client.js"]')) {
+        return;
+    }
+
     const script = document.createElement('script');
-    script.src = 'https://giscus.app/client.js';
     
-    // Настройки репозитория (оставляем как есть)
+    // Устанавливаем атрибуты, аналогичные HTML
+    script.src = 'https://giscus.app/client.js';
     script.setAttribute('data-repo', 'STEKLOBLOK/STEKLOBLOK_wiki');
     script.setAttribute('data-repo-id', 'R_kgDOP7YyfA');
-    script.setAttribute('data-category', 'Comments');
-    script.setAttribute('data-category-id', 'DIC_kwDOP7YyfM4C7Q60');
-    
-    // ========== ГЛАВНОЕ ИЗМЕНЕНИЕ ==========
-    // Принудительно используем поиск по номеру обсуждения
     script.setAttribute('data-mapping', 'number');
-    // Указываем номер обсуждения, которое мы создадим вручную
     script.setAttribute('data-term', '1');
-    // =======================================
-    
-    // Остальные настройки
-    script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
-    script.setAttribute('data-theme', theme);
+    script.setAttribute('data-theme', 'preferred_color_scheme');
     script.setAttribute('data-lang', 'ru');
-    script.setAttribute('crossorigin', 'anonymous');
+    script.crossOrigin = 'anonymous';
     script.async = true;
-    
-    giscusContainer.appendChild(script);
+
+    // Вставляем скрипт в контейнер для комментариев (или в body)
+    const container = document.getElementById('comments-section');
+    if (container) {
+        // Очищаем контейнер перед вставкой (если нужно пересоздать)
+        container.innerHTML = '';
+        container.appendChild(script);
+    } else {
+        document.body.appendChild(script);
+    }
 }
 
-function getCurrentGiscusTheme() {
-    // Возвращаем строку темы, которую ожидает Giscus
-    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-}
+// Вызов функции при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadGiscus);
