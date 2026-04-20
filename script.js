@@ -587,9 +587,15 @@ function renderCategoryMenu() {
     menu.innerHTML = html;
 }
 
-function showCategory(categoryId) {
+function showCategory(categoryId, giscusParams = {}) {
     const category = database.categories.find(c => c.id === categoryId);
     const articles = database.articles.filter(a => a.category === categoryId);
+        const urlParams = new URLSearchParams();
+    urlParams.set('category', categoryId);
+    for (const [key, value] of Object.entries(giscusParams)) {
+        urlParams.set(key, value);
+    }
+    window.history.pushState({}, '', `?${urlParams.toString()}`);
     
     const mainContent = document.getElementById('mainContent');
     
@@ -628,8 +634,18 @@ function showCategory(categoryId) {
     }
 }
 
-function showHomePage() {
+function showHomePage(giscusParams = {}) {
     const mainContent = document.getElementById('mainContent');
+
+    if (Object.keys(giscusParams).length > 0) {
+        const urlParams = new URLSearchParams();
+        for (const [key, value] of Object.entries(giscusParams)) {
+            urlParams.set(key, value);
+        }
+        window.history.pushState({}, '', `?${urlParams.toString()}`);
+    } else {
+        window.history.pushState({}, '', 'index.html');
+    }
     
     const featuredArticles = database.articles.slice(0, 6);
     let cardsHtml = '';
@@ -711,12 +727,18 @@ function showHomePage() {
     }
 }
 
-function showArticle(articleId) {
+function showArticle(articleId, giscusParams = {}) {
     const article = database.articles.find(a => a.id === articleId);
     if (!article) return;
     
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
+        const urlParams = new URLSearchParams();
+    urlParams.set('article', articleId);
+    for (const [key, value] of Object.entries(giscusParams)) {
+        urlParams.set(key, value);
+    }
+    window.history.pushState({}, '', `?${urlParams.toString()}`);
     
     let galleryHtml = '';
     if (article.gallery && article.gallery.length > 0) {
@@ -868,12 +890,20 @@ function handleRouting() {
     const articleId = params.get('article');
     const categoryId = params.get('category');
     
+    // ⭐ ВАЖНО: Сохраняем параметры Giscus перед их удалением
+    const giscusParams = {};
+    for (const [key, value] of params.entries()) {
+        if (key.startsWith('giscus') || key === 'code' || key === 'state') {
+            giscusParams[key] = value;
+        }
+    }
+    
     if (articleId) {
-        showArticle(articleId);
+        showArticle(articleId, giscusParams);
     } else if (categoryId) {
-        showCategory(categoryId);
+        showCategory(categoryId, giscusParams);
     } else {
-        showHomePage();
+        showHomePage(giscusParams);
     }
 }
 
