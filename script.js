@@ -71,8 +71,8 @@ const database = {
             `,
             gallery: [
                 { src: 'school_history.jpg', caption: 'Историческое фото' },
-                { src: 'school_abandoned.jpg', caption: 'Современность' },
-                { src: 'school_abandoned2.jpg', caption: 'Современность' }
+                { src: 'school_abandoned.JPG', caption: 'Современность' },
+                { src: 'school_abandoned2.JPG', caption: 'Современность' }
             ],
             infobox: {
                 'Архитектор': 'Й. Б. ван Лохем',
