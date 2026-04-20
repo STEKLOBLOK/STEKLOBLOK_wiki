@@ -1122,27 +1122,28 @@ function loadGiscus(theme) {
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
     
-    // !!! ВАЖНО: ЗАМЕНИ ДАННЫЕ НИЖЕ НА СВОИ С giscus.app !!!
-<script src="https://giscus.app/client.js"
-        data-repo="STEKLOBLOK/STEKLOBLOK_wiki"
-        data-repo-id="R_kgDOP7YyfA"
-        data-category="Comments"
-        data-category-id="DIC_kwDOP7YyfM4C7Q60"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="ru"
-        crossorigin="anonymous"
-        async>
-</script>
+    // Устанавливаем все необходимые атрибуты для Giscus
+    script.setAttribute('data-repo', 'STEKLOBLOK/STEKLOBLOK_wiki');
+    script.setAttribute('data-repo-id', 'R_kgDOP7YyfA');
+    script.setAttribute('data-category', 'Comments');
+    script.setAttribute('data-category-id', 'DIC_kwDOP7YyfM4C7Q60');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'bottom');
+    
+    // Используем переданную тему (theme) вместо хардкода "preferred_color_scheme"
+    script.setAttribute('data-theme', theme);
+    
+    script.setAttribute('data-lang', 'ru');
+    script.setAttribute('crossorigin', 'anonymous');
+    script.async = true;
     
     giscusContainer.appendChild(script);
 }
 
 function getCurrentGiscusTheme() {
-    // Проверяем data-theme у html элемента
+    // Возвращаем строку темы, которую ожидает Giscus
     return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 }
