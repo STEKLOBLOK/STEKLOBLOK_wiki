@@ -811,10 +811,9 @@ function showArticle(articleId, giscusParams = {}) {
     
     // Загружаем комментарии Giscus с текущей темой
     // Убедись, что функции loadGiscus и getCurrentGiscusTheme существуют (добавим их ниже)
-    if (typeof loadGiscus === 'function') {
-        loadGiscus(getCurrentGiscusTheme());
-    }
-    
+const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+const giscusTheme = currentTheme === 'dark' ? 'dark' : 'light';
+loadGiscus(giscusTheme);
 
     
     // На мобильных закрываем сайдбар после перехода
@@ -889,12 +888,12 @@ function handleRouting() {
     const categoryId = params.get('category');
     
     // ⭐ ВАЖНО: Сохраняем параметры Giscus перед их удалением
-    const giscusParams = {};
-    for (const [key, value] of params.entries()) {
-        if (key.startsWith('giscus') || key === 'code' || key === 'state') {
-            giscusParams[key] = value;
-        }
+const giscusParams = {};
+for (const [key, value] of params.entries()) {
+    if (key.startsWith('giscus') || key === 'code' || key === 'state') {
+        giscusParams[key] = value;
     }
+}
     
     if (articleId) {
         showArticle(articleId, giscusParams);
@@ -1062,6 +1061,26 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCategoryMenu();
     initSidebar();
     handleRouting();
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+        var newTheme = 'light';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+        var newTheme = 'dark';
+    }
+    // Перезагружаем Giscus с новой темой, если находимся на странице статьи
+    if (window.location.search.includes('article=')) {
+        const giscusTheme = newTheme === 'dark' ? 'dark' : 'light';
+        loadGiscus(giscusTheme);
+    }
+});
     
     // Поиск
     const searchInput = document.getElementById('globalSearchInput');
@@ -1139,15 +1158,17 @@ window.addEventListener('popstate', function() {
     handleRouting();
     scrollToTop();
 });
-function loadGiscus() {
-    // Проверяем, не загружен ли уже виджет
-    if (document.querySelector('script[src="https://giscus.app/client.js"]')) {
-        return;
+function loadGiscus(theme = 'preferred_color_scheme') {
+    const container = document.querySelector('.giscus');
+    if (!container) return;
+
+    // Удаляем старый скрипт Giscus, если он уже был добавлен
+    const existingScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+    if (existingScript) {
+        existingScript.remove();
     }
 
     const script = document.createElement('script');
-    
-    // Устанавливаем атрибуты, аналогичные HTML
     script.src = 'https://giscus.app/client.js';
     script.setAttribute('data-repo', 'STEKLOBLOK/STEKLOBLOK_wiki');
     script.setAttribute('data-repo-id', 'R_kgDOP7YyfA');
@@ -1156,21 +1177,12 @@ function loadGiscus() {
     script.setAttribute('data-reactions-enabled', '1');
     script.setAttribute('data-emit-metadata', '0');
     script.setAttribute('data-input-position', 'bottom');
-    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.setAttribute('data-theme', theme);
     script.setAttribute('data-lang', 'ru');
     script.crossOrigin = 'anonymous';
     script.async = true;
 
-    // Вставляем скрипт в контейнер для комментариев (или в body)
-    const container = document.getElementById('comments-section');
-    if (container) {
-        // Очищаем контейнер перед вставкой (если нужно пересоздать)
-        container.innerHTML = '';
-        container.appendChild(script);
-    } else {
-        document.body.appendChild(script);
+    container.innerHTML = ''; // очищаем контейнер
+    container.appendChild(script);
     }
 }
-
-// Вызов функции при загрузке страницы
-document.addEventListener('DOMContentLoaded', loadGiscus);
