@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{QUERY_STRING} ^giscus=(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?giscus=%1 [L,QSA]
