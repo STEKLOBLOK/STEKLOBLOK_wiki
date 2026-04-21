@@ -862,18 +862,37 @@ function showArticle(articleId, giscusParams = {}) {
                         <div class="infobox-label">📂 Категория</div>
                         <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
                     </div>
-                    ${article.last ? `
-                    <div class="infobox-row">
-                        <div class="infobox-label">📌 Предыдущий</div>
-                        <div class="infobox-value">${article.last}</div>
-                    </div>
-                    ` : ''}
-                    ${article.new ? `
-                    <div class="infobox-row">
-                        <div class="infobox-label">🆕 Новый</div>
-                        <div class="infobox-value">${article.new}</div>
-                    </div>
-                    ` : ''}
+${article.last && article.last !== 'Н/д' ? `
+<div class="infobox-row">
+    <div class="infobox-label">📌 Предыдущий</div>
+    <div class="infobox-value">
+        <a href="#" onclick="navigateToArticleByTitle('${article.last.replace(/'/g, "\\'")}'); return false;">
+            ${article.last}
+        </a>
+    </div>
+</div>
+` : (article.last ? `
+<div class="infobox-row">
+    <div class="infobox-label">📌 Предыдущий</div>
+    <div class="infobox-value">${article.last}</div>
+</div>
+` : '')}
+
+${article.new && article.new !== 'Н/д' ? `
+<div class="infobox-row">
+    <div class="infobox-label">🆕 Новый</div>
+    <div class="infobox-value">
+        <a href="#" onclick="navigateToArticleByTitle('${article.new.replace(/'/g, "\\'")}'); return false;">
+            ${article.new}
+        </a>
+    </div>
+</div>
+` : (article.new ? `
+<div class="infobox-row">
+    <div class="infobox-label">🆕 Новый</div>
+    <div class="infobox-value">${article.new}</div>
+</div>
+` : '')}
                 </div>
             </div>
         </div>
@@ -1248,3 +1267,19 @@ function loadGiscus(theme = 'preferred_color_scheme') {
     container.innerHTML = ''; // очищаем контейнер
     container.appendChild(script);
 }
+// Поиск ID статьи по точному совпадению заголовка (title)
+function findArticleIdByTitle(title) {
+    if (!title || title === 'Н/д' || title === 'Н/д') return null;
+    const article = database.articles.find(a => a.title.toLowerCase() === title.toLowerCase());
+    return article ? article.id : null;
+}
+// Функция перехода по названию статьи
+window.navigateToArticleByTitle = function(title) {
+    const articleId = findArticleIdByTitle(title);
+    if (articleId) {
+        showArticle(articleId);
+        scrollToTop();
+    } else {
+        alert(`Статья "${title}" не найдена в базе данных.`);
+    }
+};
