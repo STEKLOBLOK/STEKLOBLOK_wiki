@@ -896,12 +896,21 @@ function showArticle(articleId, giscusParams = {}) {
     const category = database.categories.find(c => c.id === article.category);
     
     const urlParams = new URLSearchParams();
+function showArticle(articleId, giscusParams = {}) {
+    const article = database.articles.find(a => a.id === articleId);
+    if (!article) return;
+    
+    const mainContent = document.getElementById('mainContent');
+    const category = database.categories.find(c => c.id === article.category);
+    
+    const urlParams = new URLSearchParams();
     urlParams.set('article', articleId);
     for (const [key, value] of Object.entries(giscusParams)) {
         urlParams.set(key, value);
     }
     window.history.pushState({}, '', `?${urlParams.toString()}`);
     
+    // Галерея
     let galleryHtml = '';
     if (article.gallery && article.gallery.length > 0) {
         let items = '';
@@ -921,8 +930,9 @@ function showArticle(articleId, giscusParams = {}) {
         `;
     }
     
+    // Строки инфобокса из article.infobox
     let infoboxRows = '';
-    for (const [key, value] of Object.entries(article.infobox)) {
+    for (const [key, value] of Object.entries(article.infobox || {})) {
         infoboxRows += `
             <div class="infobox-row">
                 <div class="infobox-label">${key}</div>
@@ -931,7 +941,7 @@ function showArticle(articleId, giscusParams = {}) {
         `;
     }
     
-    // Единый шаблон с полным инфобоксом
+    // Основной шаблон (единый, без дублирования)
     mainContent.innerHTML = `
         <h1 class="page-title">${article.title}</h1>
         <div class="article-container">
@@ -984,7 +994,7 @@ function showArticle(articleId, giscusParams = {}) {
         </p>
     `;
     
-    // Загружаем комментарии Giscus с текущей темой
+    // Загружаем Giscus с текущей темой
     const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     loadGiscus(currentTheme);
     
@@ -992,8 +1002,7 @@ function showArticle(articleId, giscusParams = {}) {
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
     }
-                    }
-
+}
 function randomArticle() {
     const randomIndex = Math.floor(Math.random() * database.articles.length);
     showArticle(database.articles[randomIndex].id);
