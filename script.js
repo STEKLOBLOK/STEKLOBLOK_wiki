@@ -852,6 +852,40 @@ function showArticle(articleId, giscusParams = {}) {
                         <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
                     </div>
                 </div>
+                mainContent.innerHTML = `
+    <h1 class="page-title">${article.title}</h1>
+    <div class="article-container">
+        <div class="article-text">
+            ${article.fullDesc}
+            ${galleryHtml}
+        </div>
+        <div class="infobox">
+            <div class="infobox-title">Информация об объекте</div>
+            <div class="infobox-image">
+                <img src="images/${article.image}" alt="${article.title}" onclick="openLightbox([{src: '${article.image}', caption: '${article.title}'}], 0)">
+            </div>
+            <div class="infobox-content">
+                ${infoboxRows}
+                <div class="infobox-row">
+                    <div class="infobox-label">📍 Адрес</div>
+                    <div class="infobox-value">${article.address}</div>
+                </div>
+                <div class="infobox-row">
+                    <div class="infobox-label">🟩 Состояние</div>
+                    <div class="infobox-value"><span class="state-badge ${article.stateClass}">${article.state}</span></div>
+                </div>
+                <div class="infobox-row">
+                    <div class="infobox-label">📂 Категория</div>
+                    <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
+                </div>
+                <div class="infobox-row" id="last">
+                    <div class="infobox-label">📌 Предыдущий</div>
+                    <div class="infobox-value">${article.previousValue || '—'}</div>
+                </div>
+                <div class="infobox-row" id="new">
+                    <div class="infobox-label">🆕 Новый</div>
+                    <div class="infobox-value">${article.newValue || '—'}</div>
+                </div>
             </div> <!-- Закрытие infobox -->
         </div> <!-- Закрытие article-container -->
 
