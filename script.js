@@ -336,7 +336,11 @@ const database = {
             gallery: [
                 { src: 'ip46_full.jpg', caption: 'Общий вид' },
                 { src: 'ip46_mask.jpg', caption: 'Маска ШВСМ' },
+               { src: 'ip46_mask2.jpg', caption: 'Маска спереди' },
+               { src: 'ip46_mask3.jpg', caption: 'Поврежденная часть маски' },
+               { src: 'ip46_maskinside.jpg', caption: 'Маска внутри' },
                 { src: 'ip46_patron.jpg', caption: 'Регенеративный патрон' },
+               { src: 'ip46_shl.jpg', caption: 'Крепление на шланге' },
                 { src: 'ip46_bag.jpg', caption: 'Клеймо короба' }
             ],
             infobox: {
