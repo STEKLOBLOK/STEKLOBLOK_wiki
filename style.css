@@ -954,5 +954,12 @@ body.sidebar-open {
     
     .category-card-name {
         font-size: 0.95rem;
+.infobox-value a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+.infobox-value a:hover {
+    text-decoration-style: solid;
+}
     }
 }
