@@ -11,7 +11,7 @@ const database = {
     ],
     articles: [
         {
-                        id: 'pbf',
+            id: 'pbf',
             title: 'ПБФ',
             category: 'gasmasks',
             image: 'pbf_onman.png',
@@ -444,6 +444,8 @@ const database = {
             category: 'gasmasks',
             image: 'gp5mask.jpg',
             address: 'Музейная коллекция',
+            last: 'gp4u',
+            new: 'gp7',
             state: 'Идеальное',
             stateClass: 'state-90',
             shortDesc: 'Самый массовый противогаз в мире.',
