@@ -903,6 +903,13 @@ function showArticle(articleId, giscusParams = {}) {
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
     
+function showArticle(articleId, giscusParams = {}) {
+    const article = database.articles.find(a => a.id === articleId);
+    if (!article) return;
+    
+    const mainContent = document.getElementById('mainContent');
+    const category = database.categories.find(c => c.id === article.category);
+    
     const urlParams = new URLSearchParams();
     urlParams.set('article', articleId);
     for (const [key, value] of Object.entries(giscusParams)) {
@@ -930,7 +937,7 @@ function showArticle(articleId, giscusParams = {}) {
         `;
     }
     
-    // Строки инфобокса из article.infobox
+    // Строки инфобокса
     let infoboxRows = '';
     for (const [key, value] of Object.entries(article.infobox || {})) {
         infoboxRows += `
@@ -941,7 +948,7 @@ function showArticle(articleId, giscusParams = {}) {
         `;
     }
     
-    // Основной шаблон (единый, без дублирования)
+    // Единый шаблон
     mainContent.innerHTML = `
         <h1 class="page-title">${article.title}</h1>
         <div class="article-container">
@@ -998,7 +1005,7 @@ function showArticle(articleId, giscusParams = {}) {
     const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     loadGiscus(currentTheme);
     
-    // На мобильных закрываем сайдбар после перехода
+    // На мобильных закрываем сайдбар
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
     }
