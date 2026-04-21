@@ -888,30 +888,111 @@ function showArticle(articleId, giscusParams = {}) {
                 </div>
             </div> <!-- Закрытие infobox -->
         </div> <!-- Закрытие article-container -->
-
+function showArticle(articleId, giscusParams = {}) {
+    const article = database.articles.find(a => a.id === articleId);
+    if (!article) return;
+    
+    const mainContent = document.getElementById('mainContent');
+    const category = database.categories.find(c => c.id === article.category);
+    
+    const urlParams = new URLSearchParams();
+    urlParams.set('article', articleId);
+    for (const [key, value] of Object.entries(giscusParams)) {
+        urlParams.set(key, value);
+    }
+    window.history.pushState({}, '', `?${urlParams.toString()}`);
+    
+    let galleryHtml = '';
+    if (article.gallery && article.gallery.length > 0) {
+        let items = '';
+        article.gallery.forEach((img, index) => {
+            items += `
+                <div class="gallery-item" onclick="openLightbox(${JSON.stringify(article.gallery).replace(/"/g, '&quot;')}, ${index})">
+                    <img src="images/${img.src}" alt="${img.caption}" loading="lazy">
+                    <div class="gallery-caption">${img.caption}</div>
+                </div>
+            `;
+        });
+        galleryHtml = `
+            <h2>📷 Фотогалерея</h2>
+            <div class="article-gallery">
+                ${items}
+            </div>
+        `;
+    }
+    
+    let infoboxRows = '';
+    for (const [key, value] of Object.entries(article.infobox)) {
+        infoboxRows += `
+            <div class="infobox-row">
+                <div class="infobox-label">${key}</div>
+                <div class="infobox-value">${value}</div>
+            </div>
+        `;
+    }
+    
+    // Единый шаблон с полным инфобоксом
+    mainContent.innerHTML = `
+        <h1 class="page-title">${article.title}</h1>
+        <div class="article-container">
+            <div class="article-text">
+                ${article.fullDesc}
+                ${galleryHtml}
+            </div>
+            <div class="infobox">
+                <div class="infobox-title">Информация об объекте</div>
+                <div class="infobox-image">
+                    <img src="images/${article.image}" alt="${article.title}" onclick="openLightbox([{src: '${article.image}', caption: '${article.title}'}], 0)">
+                </div>
+                <div class="infobox-content">
+                    ${infoboxRows}
+                    <div class="infobox-row">
+                        <div class="infobox-label">📍 Адрес</div>
+                        <div class="infobox-value">${article.address}</div>
+                    </div>
+                    <div class="infobox-row">
+                        <div class="infobox-label">🟩 Состояние</div>
+                        <div class="infobox-value"><span class="state-badge ${article.stateClass}">${article.state}</span></div>
+                    </div>
+                    <div class="infobox-row">
+                        <div class="infobox-label">📂 Категория</div>
+                        <div class="infobox-value"><a href="#" onclick="showCategory('${article.category}'); return false;">${category ? category.icon + ' ' + category.name : article.category}</a></div>
+                    </div>
+                    ${article.last ? `
+                    <div class="infobox-row">
+                        <div class="infobox-label">📌 Предыдущий</div>
+                        <div class="infobox-value">${article.last}</div>
+                    </div>
+                    ` : ''}
+                    ${article.new ? `
+                    <div class="infobox-row">
+                        <div class="infobox-label">🆕 Новый</div>
+                        <div class="infobox-value">${article.new}</div>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+        
         <hr style="margin: 30px 0;">
         <h2>💬 Комментарии</h2>
         <div class="giscus" style="margin-top: 20px;"></div>
-
+        
         <p style="margin-top: 20px;">
             <a href="#" onclick="window.history.back(); return false;">← Назад</a> | 
             <a href="#" onclick="showHomePage(); return false;">🏠 На главную</a>
         </p>
-    `; 
-    // === КОНЕЦ ШАБЛОННОЙ СТРОКИ (ЗДЕСЬ ТОЛЬКО ОДНА ЗАКРЫВАЮЩАЯ КАВЫЧКА) ===
+    `;
     
     // Загружаем комментарии Giscus с текущей темой
-    // Убедись, что функции loadGiscus и getCurrentGiscusTheme существуют (добавим их ниже)
-const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-const giscusTheme = currentTheme === 'dark' ? 'dark' : 'light';
-loadGiscus(giscusTheme);
-
+    const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    loadGiscus(currentTheme);
     
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
     }
-}
+                    }
 
 function randomArticle() {
     const randomIndex = Math.floor(Math.random() * database.articles.length);
