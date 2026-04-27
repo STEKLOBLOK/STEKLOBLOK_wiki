@@ -3,7 +3,7 @@
 const database = {
     categories: [
         { id: 'early', name: 'Ранний период (1910-1930-е)', icon: '🏛️', description: 'Архитектура постконструктивизма и сталинского ампира' },
-        { id: 'mid', name: 'Средний период (1940-1960-е)', icon: '🏗️', description: 'Советский модернизм и станции космической связи' },
+        { id: 'mid', name: 'Средний период (1940-1960-е)', icon: '🏗️', description: 'Советский модернизм' },
         { id: 'late', name: 'Поздний период (1970-2000-е)', icon: '🏢', description: 'Административные здания в стиле советского модернизма' },
         { id: 'underground', name: 'Подземелья', icon: '🕳️', description: 'Бомбоубежища и подземные сооружения' },
         { id: 'items', name: 'Предметы', icon: '📦', description: 'Различные предметы и артефакты' },
@@ -48,6 +48,7 @@ const database = {
                 { src: 'pbf_mask.jpg', caption: 'Маска ШМБ' },
                 { src: 'pbf_eo19.jpg', caption: 'Фильтры ЕО-19' },
                 { src: 'pbf_onman2.jpg', caption: 'На человеке' },
+                { src: 'pbf_inside.jpg', caption: 'Внутри' },
                 { src: 'pbf_onman3.jpg', caption: 'На человеке' },
                 { src: 'pbf_stalker.jpg', caption: 'В естественной среде' },
                 { src: 'pbf2.jpg', caption: 'Кустарный изолирующий противогаз' },
