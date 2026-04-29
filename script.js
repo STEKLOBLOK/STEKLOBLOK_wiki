@@ -737,11 +737,10 @@ function showHomePage(giscusParams = {}) {
         `;
     });
     
-    // Генерируем галерею категорий (без эмоджи в тексте, но с иконками на карточках)
+    // Генерируем галерею категорий
     let categoriesHtml = '';
     database.categories.forEach(cat => {
         const articlesCount = database.articles.filter(a => a.category === cat.id).length;
-        // Берем первую статью из категории для фонового изображения (если есть)
         const sampleArticle = database.articles.find(a => a.category === cat.id);
         const bgImage = sampleArticle ? `url('images/${sampleArticle.image}')` : `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`;
         
@@ -765,8 +764,7 @@ function showHomePage(giscusParams = {}) {
                 <p>👋 Этот проект разработан для любителей советской архитектуры. Вы можете выбирать разные объекты, которые я самолично посетил и сфотографировал. 📸</p>
                 <p>Проект развивается, присылайте свои материалы через кнопку «Обратная связь».</p>
             </div>
-<p>Прошу оставить отзыв на сервисе Яндекс Формы:
-https://stekloblok.github.io/stekloblok_wiki/index.html</p>
+            <p>Прошу оставить отзыв на сервисе Яндекс Формы: <a href="https://stekloblok.github.io/stekloblok_wiki/index.html" target="_blank" rel="noopener noreferrer">Ссылка</a></p>
 
             <h2>📂 Категории</h2>
             <div class="categories-grid">
@@ -792,13 +790,11 @@ https://stekloblok.github.io/stekloblok_wiki/index.html</p>
         </article>
     `;
 
-    
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
     }
 }
-
 function showArticle(articleId, giscusParams = {}) {
     const article = database.articles.find(a => a.id === articleId);
     if (!article) return;
