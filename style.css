@@ -1047,5 +1047,10 @@ img, video, iframe, table {
   .page-title {
     font-size: 1.5rem;
   }
+    /* Адаптивный заголовок, чтобы не вылезал за экран */
+.page-title {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 }
