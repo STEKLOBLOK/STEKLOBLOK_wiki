@@ -961,5 +961,91 @@ body.sidebar-open {
 .infobox-value a:hover {
     text-decoration-style: solid;
 }
-    }
+/* ===== 1. ОБЩИЙ СБРОС И ЗАЩИТА ОТ ПЕРЕПОЛНЕНИЯ ===== */
+/* Заставляет длинные слова/ссылки переноситься, а не вылезать */
+* {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Защита изображений и таблиц от выхода за контейнер */
+img, video, iframe, table {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== 2. ФИКС ДЛЯ ТЕКСТА СТАТЕЙ И КАРТОЧЕК ===== */
+/* Ваш основной контент */
+.article-text,
+.card-desc,
+.card-title,
+.shortDesc,
+.greeting-card p,
+.page-title,
+.fullDesc {
+  /* Разрешаем перенос любых слов, чтобы длинные URL 
+     или технические названия не "распирали" экран */
+  word-break: break-word;
+  hyphens: auto; /* Включаем переносы по слогам (для красоты) */
+}
+
+/* ===== 3. ФИКС ИНФОБОКСА ===== */
+/* Ваш инфобокс: вместо жесткой фиксации делаем его гибким */
+.article-container {
+  display: flex;
+  flex-wrap: wrap; /* Разрешаем перенос на мобильных */
+  gap: 20px;
+}
+
+/* Блок с текстом слева */
+.article-text {
+  flex: 1 1 60%; /* Минимум 60% ширины, может расти и сжиматься */
+  min-width: 280px; /* Не даем сжаться до нуля */
+}
+
+/* Инфобокс справа */
+.infobox {
+  flex: 0 1 350px; /* Максимальная ширина 350px, может сжиматься */
+  min-width: 250px;
+  /* Убираем position: sticky, если он есть — 
+     на маленьких экранах он ломает верстку */
+  position: static !important; 
+}
+
+/* Строки внутри инфобокса */
+.infobox-row {
+  display: flex;
+  flex-wrap: wrap; /* Текст переносится, если не влезает */
+  gap: 8px;
+}
+
+/* ===== 4. МОБИЛЬНАЯ ВЕРСИЯ ===== */
+@media (max-width: 768px) {
+  /* На телефонах все ставим в колонку */
+  .article-container {
+    flex-direction: column;
+  }
+  
+  /* Инфобокс на мобильных — во всю ширину */
+  .infobox {
+    flex: 1 1 100%;
+    position: static;
+    margin-top: 20px;
+  }
+
+  /* Карточки в сетке — по одной в ряд */
+  .cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Уменьшаем отступы */
+  body {
+    padding: 10px;
+  }
+  
+  /* Заголовки делаем меньше */
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
 }
