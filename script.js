@@ -764,7 +764,7 @@ function showHomePage(giscusParams = {}) {
                 <p>👋 Этот проект разработан для любителей советской архитектуры. Вы можете выбирать разные объекты, которые я самолично посетил и сфотографировал. 📸</p>
                 <p>Проект развивается, присылайте свои материалы через кнопку «Обратная связь».</p>
             </div>
-            <p>Прошу оставить отзыв на сервисе Яндекс Формы: <a href="https://stekloblok.github.io/stekloblok_wiki/index.html" target="_blank" rel="noopener noreferrer">Ссылка</a></p>
+            <p>Прошу оставить отзыв на сервисе Яндекс Формы: <a href="https://forms.yandex.ru/u/69f1a2cf49af476372cf6ea0" target="_blank" rel="noopener noreferrer">Ссылка</a></p>
 
             <h2>📂 Категории</h2>
             <div class="categories-grid">
