@@ -250,7 +250,7 @@ const database = {
             title: 'Бомбоубежище в промзоне',
             category: 'underground',
             image: 'bomb_shelter_prom_main.jpg',
-            address: '[ДАННЫЕ УДАЛЕНЫ]',
+            address: '[СЕКРЕТНО]',
             state: '60%',
             stateClass: 'state-60',
             shortDesc: 'Небольшое отдельно стоящее бомбоубежище среди промышленных цехов.',
@@ -283,7 +283,7 @@ const database = {
             title: 'Бомбоубежище за Спецавтохозяйством',
             category: 'underground',
             image: 'shelter_avtoz_main.jpg',
-            address: '[ДАННЫЕ УДАЛЕНЫ]',
+            address: '[СЕКРЕТНО]',
             state: '50%',
             stateClass: 'state-60',
             shortDesc: 'Крупное бомбоубежище возле железной дороги',
@@ -782,7 +782,7 @@ function showHomePage(giscusParams = {}) {
                 <h2>🎬 Видеоархив проекта</h2>
                 <div class="youtube-wrapper">
                     <iframe width="560" height="315" 
-                            src="https://www.youtube.com/embed/mNf2xctWUBI" 
+                            src="https://www.youtue.com/embed/mNf2xctWUBI" 
                             title="YouTube video player" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                             allowfullscreen>
