@@ -7,6 +7,7 @@ const database = {
         { id: 'late', name: 'Поздний период (1970-2000-е)', icon: '🏢', description: 'Административные здания в стиле советского модернизма' },
         { id: 'underground', name: 'Подземелья', icon: '🕳️', description: 'Бомбоубежища и подземные сооружения' },
         { id: 'items', name: 'Предметы', icon: '📦', description: 'Различные предметы и артефакты' },
+        { id: 'history', name: 'Истории пользователей', icon: '📃', description: 'Разные истории от пользователей' },
         { id: 'gasmasks', name: 'Противогазы', icon: '☢️', description: 'Средства индивидуальной защиты' }
     ],
     articles: [
