@@ -274,8 +274,7 @@ const database = {
         gallery: [
             { src: 'IP46_RPB.jpg', caption: 'Шайба из кристаллов' },
             { src: 'ip46_patron.jpg', caption: 'Сам патрон' }
-        ],
-       }
+        ]
     },
     {
         id: 'bomb_shelter_prom',
