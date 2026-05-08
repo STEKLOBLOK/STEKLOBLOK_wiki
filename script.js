@@ -1269,13 +1269,20 @@ function renderCategoryMenu() {
 }
 
 function showCategory(categoryId, giscusParams = {}) {
-    const category = database.categories.find(c => c.id === categoryId);
-        if (category) {
-        document.title = category.name + " — Стеклоблок.wiki"; 
-    } else {
-        document.title = "Категория — Стеклоблок.wiki";
-        }
-    const articles = database.articles.filter(a => a.category === categoryId);
+const category = database.categories.find(c => c.id === categoryId);
+if (category) {
+    document.title = category.name + ' — Стеклоблок.wiki';
+    // Берём первую попавшуюся картинку из статей категории
+    const firstArticle = database.articles.find(a => a.category === categoryId);
+    const image = firstArticle ? firstArticle.image : 'icon.jpg';
+    updateMetaTags('website', {
+        title: category.name + ' — Стеклоблок.wiki',
+        description: category.description || 'Категория объектов',
+        image: image
+    });
+} else {
+    document.title = 'Категория — Стеклоблок.wiki';
+}
         const urlParams = new URLSearchParams();
     urlParams.set('category', categoryId);
     for (const [key, value] of Object.entries(giscusParams)) {
@@ -1320,7 +1327,12 @@ function showCategory(categoryId, giscusParams = {}) {
 }
 
 function showHomePage(giscusParams = {}) {
-    document.title = "Стеклоблок.wiki — Энциклопедия советской архитектуры"; 
+    document.title = 'Стеклоблок.wiki — Энциклопедия советской архитектуры';
+updateMetaTags('website', {
+    title: 'Стеклоблок.wiki — Энциклопедия советской архитектуры',
+    description: 'Проект о советской архитектуре, противогазах, подземельях и найденных предметах.',
+    image: 'icon.jpg'   // или любое другое стандартное изображение
+}
     const mainContent = document.getElementById('mainContent');
 
     if (Object.keys(giscusParams).length > 0) {
