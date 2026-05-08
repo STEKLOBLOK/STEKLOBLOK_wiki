@@ -1410,13 +1410,19 @@ function showHomePage(giscusParams = {}) {
         collapseSidebar();
     }
 }
+
 function showArticle(articleId, giscusParams = {}) {
-    const article = database.articles.find(a => a.id === articleId);
-    if (!article) {
-        document.title = "Статья не найдена — Стеклоблок.wiki";
-        return;
-    }
-    document.title = article.title + " — Стеклоблок.wiki";  
+const article = database.articles.find(a => a.id === articleId);
+if (!article) {
+    document.title = 'Статья не найдена — Стеклоблок.wiki';
+    return;
+}
+document.title = article.title + ' — Стеклоблок.wiki';
+updateMetaTags('article', {
+    title: article.title + ' — Стеклоблок.wiki',
+    description: article.shortDesc,
+    image: article.image   // например, 'pbf_onman.png'
+});  
     
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
@@ -1636,6 +1642,33 @@ for (const [key, value] of params.entries()) {
         showCategory(categoryId, giscusParams);
     } else {
         showHomePage(giscusParams);
+    }
+}
+
+function updateMetaTags(type, data) {
+    // Удаляем все старые og-теги
+    document.querySelectorAll('meta[property^="og:"]').forEach(el => el.remove());
+
+    const setMeta = (property, content) => {
+        if (!content) return;
+        const meta = document.createElement('meta');
+        meta.setAttribute('property', property);
+        meta.setAttribute('content', content);
+        document.head.appendChild(meta);
+    };
+
+    setMeta('og:site_name', 'Стеклоблок.wiki');
+    setMeta('og:type', type === 'article' ? 'article' : 'website');
+    setMeta('og:url', window.location.href);
+
+    if (data) {
+        setMeta('og:title', data.title);
+        setMeta('og:description', data.description);
+        if (data.image) {
+            // Абсолютный путь к изображению
+            const base = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            setMeta('og:image', base + 'images/' + data.image);
+        }
     }
 }
 
