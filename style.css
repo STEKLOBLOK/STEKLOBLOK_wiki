@@ -1,3 +1,17 @@
+/* ===== ОСНОВНЫЕ ПЕРЕМЕННЫЕ ===== */
+:root {
+    --wiki-bg: #f6f6f6;
+    --wiki-header-bg: #2c3e50;
+    --wiki-header-text: #ecf0f1;
+    --wiki-link: #0645ad;
+    --wiki-link-visited: #0b0080;
+    --wiki-border: #a7d7f9;
+    --card-bg: #ffffff;
+    --sidebar-bg: #f1f1f1;
+    --accent-color: #c0392b;
+}
+
+/* ===== ТЕМНАЯ ТЕМА ===== */
 [data-theme="dark"] {
     --wiki-bg: #1a1a1a;
     --wiki-header-bg: #111;
@@ -35,22 +49,39 @@
     background: #1e3a5f;
     border-left-color: #8ab4f8;
 }
-:root {
-    --wiki-bg: #f6f6f6;
-    --wiki-header-bg: #2c3e50;
-    --wiki-header-text: #ecf0f1;
-    --wiki-link: #0645ad;
-    --wiki-link-visited: #0b0080;
-    --wiki-border: #a7d7f9;
-    --card-bg: #ffffff;
-    --sidebar-bg: #f1f1f1;
-    --accent-color: #c0392b;
+
+[data-theme="dark"] .sidebar-toggle {
+    background: #333;
+    border-color: #555;
 }
 
+[data-theme="dark"] .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .wiki-sidebar.collapsed {
+    opacity: 0;
+}
+
+[data-theme="dark"] .category-card-count {
+    color: #aaa;
+}
+
+[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 body {
@@ -69,7 +100,12 @@ a:hover {
     text-decoration: underline;
 }
 
-/* === ВЕРХНЯЯ ПЛАШКА WIKI === */
+img, video, iframe, table {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===== ВЕРХНЯЯ ПЛАШКА WIKI ===== */
 .wiki-header {
     background-color: var(--wiki-header-bg);
     background-image: url('header-bg.jpg');
@@ -112,6 +148,7 @@ a:hover {
     color: #ccc;
     font-size: 1rem;
     font-family: sans-serif;
+    white-space: nowrap;
 }
 
 .wiki-nav {
@@ -153,23 +190,41 @@ a:hover {
     cursor: pointer;
 }
 
-/* === LAYOUT === */
+/* ===== LAYOUT ===== */
 .wiki-layout {
     display: flex;
     max-width: 1400px;
     margin: 20px auto;
     padding: 0 20px;
     gap: 20px;
+    position: relative;
 }
 
+/* Боковая панель */
 .wiki-sidebar {
-    flex: 1;
-    min-width: 220px;
+    flex: 0 0 260px;
+    min-width: 0;
     background: var(--sidebar-bg);
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #ddd;
     height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                flex 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.wiki-sidebar.collapsed {
+    flex: 0 0 0;
+    transform: translateX(-20px);
+    opacity: 0;
+    margin-right: -260px;
+    pointer-events: none;
+    overflow: hidden;
 }
 
 .sidebar-section {
@@ -201,8 +256,10 @@ a:hover {
     font-size: 0.9rem;
 }
 
+/* Основной контент */
 .wiki-content {
-    flex: 4;
+    flex: 1;
+    min-width: 0;
     background: white;
     padding: 25px;
     border-radius: 8px;
@@ -218,9 +275,81 @@ a:hover {
     margin-bottom: 20px;
     font-family: 'Linux Libertine', serif;
     font-weight: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
-/* === КАРТОЧКИ (СЕТКА) === */
+/* ===== КНОПКА СКРЫТИЯ САЙДБАРА ===== */
+.sidebar-toggle {
+    display: none;
+    width: 36px;
+    height: 36px;
+    background: var(--wiki-header-bg);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 18px;
+}
+
+.sidebar-toggle:hover {
+    background: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.sidebar-toggle .arrow {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-toggle.collapsed .arrow {
+    transform: rotate(180deg);
+}
+
+/* Оверлей */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Скроллбар */
+.wiki-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.wiki-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.wiki-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+.wiki-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* ===== КАРТОЧКИ ===== */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -257,11 +386,15 @@ a:hover {
     font-size: 1.4rem;
     margin-bottom: 8px;
     color: var(--wiki-link);
+    word-break: break-word;
+    hyphens: auto;
 }
 .card-desc {
     color: #555;
     font-size: 0.9rem;
     margin-bottom: 12px;
+    word-break: break-word;
+    hyphens: auto;
 }
 .card-meta {
     display: flex;
@@ -275,14 +408,18 @@ a:hover {
     border-radius: 12px;
 }
 
-/* === СТРАНИЦА СТАТЬИ (ИНФОБОКС) === */
+/* ===== СТРАНИЦА СТАТЬИ ===== */
 .article-container {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .article-text {
-    flex: 3;
+    flex: 1 1 60%;
+    min-width: 280px;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .article-text h2 {
@@ -296,7 +433,7 @@ a:hover {
     margin-bottom: 15px;
 }
 
-/* ГАЛЕРЕЯ ВНУТРИ СТАТЬИ */
+/* Галерея */
 .article-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -333,9 +470,10 @@ a:hover {
     background: white;
 }
 
-/* ИНФОБОКС - ИСПРАВЛЕН ДЛЯ АДАПТИВНОСТИ ИЗОБРАЖЕНИЙ */
+/* Инфобокс */
 .infobox {
-    flex: 1.2;
+    flex: 0 1 350px;
+    min-width: 250px;
     background: #f8f9fa;
     border: 1px solid #a2a9b1;
     padding: 0;
@@ -374,8 +512,10 @@ a:hover {
 
 .infobox-row {
     display: flex;
+    flex-wrap: wrap;
     border-bottom: 1px solid #ccc;
     padding: 6px 0;
+    gap: 8px;
 }
 .infobox-label {
     font-weight: bold;
@@ -384,7 +524,15 @@ a:hover {
 .infobox-value {
     width: 60%;
 }
+.infobox-value a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+.infobox-value a:hover {
+    text-decoration-style: solid;
+}
 
+/* Бейджи */
 .state-badge {
     display: inline-block;
     padding: 2px 10px;
@@ -400,7 +548,7 @@ a:hover {
 .state-20 { background: #e74c3c; }
 .state-10 { background: #c0392b; }
 
-/* === ЛАЙТБОКС === */
+/* ===== ЛАЙТБОКС ===== */
 .lightbox {
     display: none;
     position: fixed;
@@ -487,20 +635,15 @@ a:hover {
     user-select: none;
 }
 
-.lightbox-prev {
-    left: 20px;
-}
-
-.lightbox-next {
-    right: 20px;
-}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
 
 .lightbox-prev:hover,
 .lightbox-next:hover {
     background: rgba(255,255,255,0.2);
 }
 
-/* === YOUTUBE === */
+/* ===== YOUTUBE ===== */
 .youtube-section {
     margin: 30px 0;
 }
@@ -521,7 +664,7 @@ a:hover {
     height: 100%;
 }
 
-/* === FOOTER === */
+/* ===== FOOTER ===== */
 .wiki-footer {
     text-align: center;
     padding: 20px;
@@ -538,6 +681,8 @@ a:hover {
     padding: 15px 20px;
     margin-bottom: 30px;
     border-radius: 0 8px 8px 0;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .back-link {
@@ -553,334 +698,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* Адаптив */
-@media (max-width: 800px) {
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .logo-link {
-        font-size: 1.8rem;  /* уменьшаем размер */
-    }
-    .wiki-nav {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .nav-search input {
-        width: 140px;
-    }
-    .logo-sub {
-        white-space: nowrap;
-    }
-    .wiki-layout { flex-direction: column; }
-    .wiki-sidebar { width: 100%; }
-    .header-container { flex-direction: column; gap: 15px; }
-    .article-container { flex-direction: column; }
-    .nav-search input { width: 150px; }
-    
-    .lightbox-prev,
-    .lightbox-next {
-        width: 40px;
-        height: 40px;
-        font-size: 30px;
-}
-    .article-container {
-        flex-direction: column;
-    }
-    .infobox {
-        order: -1; /* поднимает инфобокс наверх */
-        margin-bottom: 20px;
-    }
-    .article-text {
-        order: 1;
-    }
-}
-/* === ЗАКРЕПЛЕНИЕ ИНФОБОКСА НА МОБИЛЬНЫХ === */
-@media (max-width: 800px) {
-    .article-container {
-        flex-direction: column;
-    }
-    
-    /* Инфобокс отображается сверху */
-    .infobox {
-        order: -1; /* Это уже есть, оставляем */
-        margin-bottom: 20px;
-    }
-    
-    /* Основной текст идет после инфобокса */
-    .article-text {
-        order: 1;
-    }
-    
-    /* Уменьшаем отступы для мобильных */
-    .infobox-content {
-        padding: 10px;
-    }
-    
-    .infobox-title {
-        font-size: 1.1rem;
-        padding: 8px;
-    }
-}
-/* === БОКОВАЯ ПАНЕЛЬ С АНИМАЦИЕЙ === */
-
-/* Контейнер для всего layout */
-.wiki-layout {
-    display: flex;
-    max-width: 1400px;
-    margin: 20px auto;
-    padding: 0 20px;
-    gap: 20px;
-    position: relative;
-}
-
-/* Боковая панель */
-.wiki-sidebar {
-    flex: 0 0 260px;
-    min-width: 0;
-    background: var(--sidebar-bg);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    height: fit-content;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                flex 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                margin 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Скрытая панель */
-.wiki-sidebar.collapsed {
-    flex: 0 0 0;
-    transform: translateX(-20px);
-    opacity: 0;
-    margin-right: -260px;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-/* Кнопка переключения панели */
-.sidebar-toggle {
-    width: 36px;
-    height: 36px;
-    background: var(--wiki-header-bg);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 18px;
-}
-
-.sidebar-toggle:hover {
-    background: var(--accent-color);
-    transform: scale(1.1);
-}
-
-.sidebar-toggle .arrow {
-    transition: transform 0.3s ease;
-}
-
-.sidebar-toggle.collapsed .arrow {
-    transform: rotate(180deg);
-}
-
-/* Основной контент */
-.wiki-content {
-    flex: 1;
-    min-width: 0;
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    min-height: 600px;
-}
-
-/* Оверлей при открытой панели на мобильных */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.sidebar-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Блокировка скролла body только на мобильных при открытой панели */
-body.sidebar-open {
-    overflow: hidden;
-}
-
-/* Адаптив для мобильных */
-@media (max-width: 800px) {
-    .wiki-sidebar {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        bottom: 0;
-        width: 280px;
-        max-height: none;
-        height: calc(100vh - 70px);
-        z-index: 1000;
-        border-radius: 0 12px 12px 0;
-        box-shadow: 2px 0 12px rgba(0,0,0,0.15);
-        margin-right: 0;
-        transform: translateX(0);
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow-y: auto; /* Включаем прокрутку */
-        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
-    }
-    
-    /* Кастомный скроллбар для мобильных (опционально) */
-    .wiki-sidebar::-webkit-scrollbar {
-        width: 4px;
-    }
-    
-    .wiki-sidebar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    
-    .wiki-sidebar::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 4px;
-    }
-    
-    .wiki-sidebar.collapsed {
-        transform: translateX(-100%);
-        margin-right: 0;
-        flex: 0 0 auto;
-        opacity: 1;
-        pointer-events: none;
-    }
-    
-    .sidebar-toggle {
-        position: fixed !important;
-        left: 15px !important;
-        top: 80px !important;
-        width: 40px;
-        height: 40px;
-        z-index: 1001;
-    }
-    
-    .wiki-layout {
-        padding-left: 20px;
-    }
-    
-    .wiki-content {
-        width: 100%;
-    }
-    
-    /* Затемняем кнопку при открытой панели */
-    body.sidebar-open .sidebar-toggle {
-        opacity: 0.6;
-    }
-}
-
-/* Стили для темной темы */
-[data-theme="dark"] .sidebar-toggle {
-    background: #333;
-    border-color: #555;
-}
-
-[data-theme="dark"] .sidebar-overlay {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-[data-theme="dark"] .wiki-sidebar.collapsed {
-    opacity: 0;
-}
-
-/* Плавность */
-.wiki-sidebar {
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-}
-
-/* Улучшенный скроллбар для панели на десктопе */
-.wiki-sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-
-.wiki-sidebar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.wiki-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
-.wiki-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-[data-theme="dark"] .wiki-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-/* Кнопка переключения панели - по умолчанию скрыта на десктопе */
-.sidebar-toggle {
-    display: none; /* Скрываем на десктопе */
-    width: 36px;
-    height: 36px;
-    background: var(--wiki-header-bg);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 18px;
-}
-
-.sidebar-toggle:hover {
-    background: var(--accent-color);
-    transform: scale(1.1);
-}
-
-.sidebar-toggle .arrow {
-    transition: transform 0.3s ease;
-}
-
-.sidebar-toggle.collapsed .arrow {
-    transform: rotate(180deg);
-}
-
-/* Адаптив для мобильных - показываем кнопку */
-@media (max-width: 800px) {
-    .sidebar-toggle {
-        display: flex !important; /* Показываем только на мобильных */
-        position: fixed !important;
-        left: 15px !important;
-        top: 80px !important;
-        width: 40px;
-        height: 40px;
-        z-index: 1001;
-    }  
-}
-/* Стили для галереи категорий на главной странице */
+/* ===== КАТЕГОРИИ НА ГЛАВНОЙ ===== */
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -933,11 +751,129 @@ body.sidebar-open {
     color: #666;
 }
 
-[data-theme="dark"] .category-card-count {
-    color: #aaa;
+/* ===== АДАПТИВ ===== */
+@media (max-width: 800px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .logo-link {
+        font-size: 1.8rem;
+    }
+    .wiki-nav {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .nav-search input {
+        width: 140px;
+    }
+    
+    .wiki-layout {
+        flex-direction: column;
+        padding-left: 20px;
+    }
+    .wiki-content {
+        width: 100%;
+    }
+
+    /* Боковая панель на мобильных */
+    .wiki-sidebar {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        max-height: none;
+        height: calc(100vh - 70px);
+        z-index: 1000;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+        margin-right: 0;
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .wiki-sidebar.collapsed {
+        transform: translateX(-100%);
+        margin-right: 0;
+        flex: 0 0 auto;
+        opacity: 1;
+        pointer-events: none;
+    }
+    
+    .wiki-sidebar::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .wiki-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .wiki-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+    }
+
+    /* Кнопка сайдбара */
+    .sidebar-toggle {
+        display: flex !important;
+        position: fixed !important;
+        left: 15px !important;
+        top: 80px !important;
+        width: 40px;
+        height: 40px;
+        z-index: 1001;
+    }
+    
+    body.sidebar-open .sidebar-toggle {
+        opacity: 0.6;
+    }
+
+    /* Статья на мобильных */
+    .article-container {
+        flex-direction: column;
+    }
+    
+    .infobox {
+        order: -1;
+        margin-bottom: 20px;
+        flex: 1 1 100%;
+        position: static;
+    }
+    
+    .article-text {
+        order: 1;
+    }
+    
+    .infobox-content {
+        padding: 10px;
+    }
+    
+    .infobox-title {
+        font-size: 1.1rem;
+        padding: 8px;
+    }
+
+    /* Остальное */
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+    }
 }
 
-/* Адаптив для мобильных */
 @media (max-width: 600px) {
     .categories-grid {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -954,103 +890,5 @@ body.sidebar-open {
     
     .category-card-name {
         font-size: 0.95rem;
-.infobox-value a {
-    text-decoration: underline;
-    text-decoration-style: dotted;
-}
-.infobox-value a:hover {
-    text-decoration-style: solid;
-}
-/* ===== 1. ОБЩИЙ СБРОС И ЗАЩИТА ОТ ПЕРЕПОЛНЕНИЯ ===== */
-/* Заставляет длинные слова/ссылки переноситься, а не вылезать */
-* {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Защита изображений и таблиц от выхода за контейнер */
-img, video, iframe, table {
-  max-width: 100%;
-  height: auto;
-}
-
-/* ===== 2. ФИКС ДЛЯ ТЕКСТА СТАТЕЙ И КАРТОЧЕК ===== */
-/* Ваш основной контент */
-.article-text,
-.card-desc,
-.card-title,
-.shortDesc,
-.greeting-card p,
-.page-title,
-.fullDesc {
-  /* Разрешаем перенос любых слов, чтобы длинные URL 
-     или технические названия не "распирали" экран */
-  word-break: break-word;
-  hyphens: auto; /* Включаем переносы по слогам (для красоты) */
-}
-
-/* ===== 3. ФИКС ИНФОБОКСА ===== */
-/* Ваш инфобокс: вместо жесткой фиксации делаем его гибким */
-.article-container {
-  display: flex;
-  flex-wrap: wrap; /* Разрешаем перенос на мобильных */
-  gap: 20px;
-}
-
-/* Блок с текстом слева */
-.article-text {
-  flex: 1 1 60%; /* Минимум 60% ширины, может расти и сжиматься */
-  min-width: 280px; /* Не даем сжаться до нуля */
-}
-
-/* Инфобокс справа */
-.infobox {
-  flex: 0 1 350px; /* Максимальная ширина 350px, может сжиматься */
-  min-width: 250px;
-  /* Убираем position: sticky, если он есть — 
-     на маленьких экранах он ломает верстку */
-  position: static !important; 
-}
-
-/* Строки внутри инфобокса */
-.infobox-row {
-  display: flex;
-  flex-wrap: wrap; /* Текст переносится, если не влезает */
-  gap: 8px;
-}
-
-/* ===== 4. МОБИЛЬНАЯ ВЕРСИЯ ===== */
-@media (max-width: 768px) {
-  /* На телефонах все ставим в колонку */
-  .article-container {
-    flex-direction: column;
-  }
-  
-  /* Инфобокс на мобильных — во всю ширину */
-  .infobox {
-    flex: 1 1 100%;
-    position: static;
-    margin-top: 20px;
-  }
-
-  /* Карточки в сетке — по одной в ряд */
-  .cards-grid {
-    grid-template-columns: 1fr !important;
-  }
-  
-  /* Уменьшаем отступы */
-  body {
-    padding: 10px;
-  }
-  
-  /* Заголовки делаем меньше */
-  .page-title {
-    font-size: 1.5rem;
-  }
-    /* Адаптивный заголовок, чтобы не вылезал за экран */
-.page-title {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-}
+    }
 }
