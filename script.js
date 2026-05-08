@@ -1620,12 +1620,18 @@ function performSearch(query) {
 }
 
 function handleRouting() {
-    document.title = "Загрузка… — Стеклоблок.wiki";  // временный заголовок
     const params = new URLSearchParams(window.location.search);
     const articleId = params.get('article');
     const categoryId = params.get('category');
+    
+    // Сохраняем параметры Giscus перед их удалением
     const giscusParams = {};
-    // ... парсинг параметров
+    for (const [key, value] of params.entries()) {
+        if (key.startsWith('giscus') || key === 'code' || key === 'state') {
+            giscusParams[key] = value;
+        }
+    }
+    
     if (articleId) {
         showArticle(articleId, giscusParams);
     } else if (categoryId) {
@@ -1634,11 +1640,6 @@ function handleRouting() {
         showHomePage(giscusParams);
     }
 }
-
-function handleRouting() {
-    const params = new URLSearchParams(window.location.search);
-    const articleId = params.get('article');
-    const categoryId = params.get('category');
     
     // ⭐ ВАЖНО: Сохраняем параметры Giscus перед их удалением
 const giscusParams = {};
