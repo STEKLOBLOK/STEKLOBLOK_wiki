@@ -1269,29 +1269,30 @@ function renderCategoryMenu() {
 }
 
 function showCategory(categoryId, giscusParams = {}) {
-const category = database.categories.find(c => c.id === categoryId);
-if (category) {
-    document.title = category.name + ' — Стеклоблок.wiki';
-    // Берём первую попавшуюся картинку из статей категории
-    const firstArticle = database.articles.find(a => a.category === categoryId);
-    const image = firstArticle ? firstArticle.image : 'icon.jpg';
-    updateMetaTags('website', {
-        title: category.name + ' — Стеклоблок.wiki',
-        description: category.description || 'Категория объектов',
-        image: image
-    });
-} else {
-    document.title = 'Категория — Стеклоблок.wiki';
-}
-        const urlParams = new URLSearchParams();
+    const category = database.categories.find(c => c.id === categoryId);
+    if (category) {
+        document.title = category.name + ' — Стеклоблок.wiki';
+        const firstArticle = database.articles.find(a => a.category === categoryId);
+        const image = firstArticle ? firstArticle.image : 'icon.jpg';
+        updateMetaTags('website', {
+            title: category.name + ' — Стеклоблок.wiki',
+            description: category.description || 'Категория объектов',
+            image: image
+        });
+    } else {
+        document.title = 'Категория — Стеклоблок.wiki';
+    }
+
+    const urlParams = new URLSearchParams();
     urlParams.set('category', categoryId);
     for (const [key, value] of Object.entries(giscusParams)) {
         urlParams.set(key, value);
     }
     window.history.pushState({}, '', `?${urlParams.toString()}`);
-    
+
     const mainContent = document.getElementById('mainContent');
-    
+    const articles = database.articles.filter(a => a.category === categoryId);
+
     let articlesHtml = '';
     articles.forEach(art => {
         articlesHtml += `
@@ -1308,7 +1309,7 @@ if (category) {
             </div>
         `;
     });
-    
+
     mainContent.innerHTML = `
         <h1 class="page-title">${category ? category.icon + ' ' + category.name : 'Категория'}</h1>
         ${category && category.description ? `<p style="margin-bottom: 20px;">${category.description}</p>` : ''}
@@ -1318,9 +1319,7 @@ if (category) {
         </div>
         <p style="margin-top: 20px;"><a href="#" onclick="showHomePage(); return false;">← Вернуться на главную</a></p>
     `;
-    
-    
-    // На мобильных закрываем сайдбар после перехода
+
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
     }
