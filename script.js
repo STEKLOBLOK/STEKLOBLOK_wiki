@@ -1270,6 +1270,11 @@ function renderCategoryMenu() {
 
 function showCategory(categoryId, giscusParams = {}) {
     const category = database.categories.find(c => c.id === categoryId);
+        if (category) {
+        document.title = category.name + " — Стеклоблок.wiki"; 
+    } else {
+        document.title = "Категория — Стеклоблок.wiki";
+        }
     const articles = database.articles.filter(a => a.category === categoryId);
         const urlParams = new URLSearchParams();
     urlParams.set('category', categoryId);
@@ -1315,6 +1320,7 @@ function showCategory(categoryId, giscusParams = {}) {
 }
 
 function showHomePage(giscusParams = {}) {
+    document.title = "Стеклоблок.wiki — Энциклопедия советской архитектуры"; 
     const mainContent = document.getElementById('mainContent');
 
     if (Object.keys(giscusParams).length > 0) {
@@ -1406,7 +1412,11 @@ function showHomePage(giscusParams = {}) {
 }
 function showArticle(articleId, giscusParams = {}) {
     const article = database.articles.find(a => a.id === articleId);
-    if (!article) return;
+    if (!article) {
+        document.title = "Статья не найдена — Стеклоблок.wiki";
+        return;
+    }
+    document.title = article.title + " — Стеклоблок.wiki";  
     
     const mainContent = document.getElementById('mainContent');
     const category = database.categories.find(c => c.id === article.category);
@@ -1537,6 +1547,7 @@ function randomArticle() {
 
 function performSearch(query) {
     if (!query || query.trim() === '') return;
+    document.title = `Поиск: ${query} — Стеклоблок.wiki`;
     
     query = query.toLowerCase().trim();
     const results = database.articles.filter(a => 
@@ -1587,6 +1598,22 @@ function performSearch(query) {
     // На мобильных закрываем сайдбар после перехода
     if (window.innerWidth <= 800 && sidebarState && sidebarState.isOpen) {
         collapseSidebar();
+    }
+}
+
+function handleRouting() {
+    document.title = "Загрузка… — Стеклоблок.wiki";  // временный заголовок
+    const params = new URLSearchParams(window.location.search);
+    const articleId = params.get('article');
+    const categoryId = params.get('category');
+    const giscusParams = {};
+    // ... парсинг параметров
+    if (articleId) {
+        showArticle(articleId, giscusParams);
+    } else if (categoryId) {
+        showCategory(categoryId, giscusParams);
+    } else {
+        showHomePage(giscusParams);
     }
 }
 
