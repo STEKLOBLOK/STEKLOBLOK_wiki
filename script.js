@@ -1364,7 +1364,7 @@ function showHomePage(giscusParams = {}) {
             </div>
         `;
     });
-    
+// тут ссылка на видео специально кривая, потому что пока ролик не снял, а как заглушка стоит моя собственная песня с нецензурным содержанием
     mainContent.innerHTML = `
         <article class="main-article">
             <h1 class="page-title">Добро пожаловать в энциклопедию!</h1>
