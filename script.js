@@ -244,6 +244,9 @@ const database = {
         id: 'rp_chistka',
         title: 'Как я РП-46 чистил',
         category: 'history',
+        address: 'Музей',
+        state: '06.05.26',
+        stateClass: 'state-90',
         image: 'rp46_collage.jpg',
         shortDesc: 'Как не надо обращаться с РП.',
         fullDesc: `
