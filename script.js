@@ -1331,7 +1331,7 @@ updateMetaTags('website', {
     title: 'Стеклоблок.wiki — Энциклопедия советской архитектуры',
     description: 'Проект о советской архитектуре, противогазах, подземельях и найденных предметах.',
     image: 'icon.jpg'   // или любое другое стандартное изображение
-}
+});
     const mainContent = document.getElementById('mainContent');
 
     if (Object.keys(giscusParams).length > 0) {
