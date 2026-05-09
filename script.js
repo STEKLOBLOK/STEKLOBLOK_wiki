@@ -427,7 +427,6 @@ const database = {
             { src: 'ip46_mask3.jpg', caption: 'Поврежденная часть маски' },
             { src: 'ip46_maskinside.jpg', caption: 'Маска внутри' },
             { src: 'ip46_patron.jpg', caption: 'Регенеративный патрон' },
-            { src: 'IP46_RPB.jpg', caption: 'Наполнитель патрона' },
             { src: 'ip46_shl.jpg', caption: 'Крепление на шланге' },
             { src: 'ip46_bag.jpg', caption: 'Клеймо короба' }
         ],
