@@ -1623,7 +1623,7 @@ function handleRouting() {
     const articleId = params.get('article');
     const categoryId = params.get('category');
     
-    // Сохраняем параметры Giscus перед их удалением
+    // Сохраняем параметры Giscus
     const giscusParams = {};
     for (const [key, value] of params.entries()) {
         if (key.startsWith('giscus') || key === 'code' || key === 'state') {
@@ -1638,24 +1638,7 @@ function handleRouting() {
     } else {
         showHomePage(giscusParams);
     }
-}
-    
-    // ⭐ ВАЖНО: Сохраняем параметры Giscus перед их удалением
-const giscusParams = {};
-for (const [key, value] of params.entries()) {
-    if (key.startsWith('giscus') || key === 'code' || key === 'state') {
-        giscusParams[key] = value;
-    }
-}
-    
-    if (articleId) {
-        showArticle(articleId, giscusParams);
-    } else if (categoryId) {
-        showCategory(categoryId, giscusParams);
-    } else {
-        showHomePage(giscusParams);
-    }
-}
+} 
 
 function updateMetaTags(type, data) {
     // Удаляем все старые og-теги
