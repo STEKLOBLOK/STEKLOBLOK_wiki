@@ -393,7 +393,7 @@ const database = {
         category: 'gasmasks',
         image: 'shms_full.jpg',
         address: 'Музейная коллекция',
-        last: 'РШ-4 (ШМ-41м)',
+        last: 'РШ-4',
         new: 'ПМГ-1',
         state: 'Идеальное',
         stateClass: 'state-90',
