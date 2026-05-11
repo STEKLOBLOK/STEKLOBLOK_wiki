@@ -860,7 +860,7 @@ const database = {
         image: 'karz_main.jpg',
         address: 'Заводский район',
         state: '40%',
-        stateClass: 'state-40',
+        stateClass: 'state-80',
         shortDesc: 'Некогда круный завод из множества цехов и построек.',
         fullDesc: `
             <h2>🏛️ Объект</h2>
@@ -917,7 +917,7 @@ const database = {
             ],
         infobox: {
             'Тип': 'Заводской комплекс',
-            'Состояние': '40%'
+            'Статус': 'Заброшен'
         }
     },
 
